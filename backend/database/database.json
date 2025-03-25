@@ -1,0 +1,23 @@
+{
+    "createCompteTable":"CREATE TABLE IF NOT EXISTS Compte (id_compte INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255),prenom VARCHAR(255),numero_tel VARCHAR(20),adresse_email VARCHAR(255) UNIQUE,mot_de_passe VARCHAR(255))",
+    "createAdminTable":" CREATE TABLE IF NOT EXISTS Compte_Admin (id_compte INT PRIMARY KEY,FOREIGN KEY (id_compte) REFERENCES Compte(id_compte) ON DELETE CASCADE)",
+    "createClientTable":"CREATE TABLE IF NOT EXISTS Compte_Client (id_compte INT PRIMARY KEY,FOREIGN KEY (id_compte) REFERENCES Compte(id_compte) ON DELETE CASCADE)",
+    "createRefreshTokensTable":"CREATE TABLE IF NOT EXISTS refresh_tokens (id INT AUTO_INCREMENT PRIMARY KEY,refresh_token VARCHAR(255) NOT NULL,id_compte INT NOT NULL,FOREIGN KEY (id_compte) REFERENCES Compte(id_compte) ON DELETE CASCADE)",
+
+    "createPlantTable":"CREATE TABLE IF NOT EXISTS Plant (id_plant INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255))",
+    "createSensorTypeTable":"CREATE TABLE IF NOT EXISTS SensorType (id_sensor_type INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255))",
+    "createPinTable":"CREATE TABLE IF NOT EXISTS Pin (id_pin INT AUTO_INCREMENT PRIMARY KEY,id_sensor_type INT,FOREIGN KEY (id_sensor_type) REFERENCES SensorType(id_sensor_type) ON DELETE CASCADE)",
+    "createPinPlantTable":"CREATE TABLE IF NOT EXISTS Pin_Plant (id_pin INT,id_plant INT,PRIMARY KEY (id_pin,id_plant),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE,FOREIGN KEY (id_plant) REFERENCES Plant(id_plant) ON DELETE CASCADE)",
+    "createValueTable":"CREATE TABLE IF NOT EXISTS Val (date INT,id_pin INT,valeur FLOAT,PRIMARY KEY (date,id_pin),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE)",
+
+    "createSettingsTable":"CREATE TABLE IF NOT EXISTS Settings (id INT AUTO_INCREMENT PRIMARY KEY,settingsType VARCHAR(255),value VARCHAR(255))",
+
+    "deleteUserTables":"DROP TABLE IF EXISTS Compte_Client, Compte_Admin, Compte,refresh_tokens",
+    "deletePlantTable":"DROP TABLE IF EXISTS Pin_Plant, Val, Pin, Plant"
+
+}
+
+
+
+
+
