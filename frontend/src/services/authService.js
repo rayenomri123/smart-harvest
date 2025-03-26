@@ -28,9 +28,10 @@ export async function refreshToken() {
 export async function logout() {
   try {
     const response = await fetch("http://localhost:3500/api/logout", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
       },
       credentials: "include",
     });

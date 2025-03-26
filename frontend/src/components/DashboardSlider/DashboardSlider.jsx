@@ -7,6 +7,8 @@ import {
 } from 'react-icons/fi';
 import { MdOutlineSpa, MdDashboard } from 'react-icons/md';
 import './DashboardSlider.css';
+//import logout from authservice
+import { logout } from '../../services/authService';
 
 const DashboardSlider = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -23,7 +25,7 @@ const DashboardSlider = () => {
   };
 
   const handleLogout = () => {
-    console.log('User logged out');
+    logout();
     // Add your logout logic here (e.g., clearing auth tokens, redirecting, etc.)
   };
 
