@@ -1,3 +1,4 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { auth_test } from './services/authService';
@@ -9,6 +10,7 @@ import Footer from './components/Footer/Footer.jsx';
 import SignUp from './pages/SignUp/SignUp.jsx';
 import ContactUs from './pages/ContactUs/ContactUs.jsx';
 import Dashboard from './pages/Dashboard/Dashboard.jsx';
+import LoadingPage from './components/LoadingPage/LoadingPage.jsx';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -31,7 +33,7 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (isLoading) {
-    return <div className="loading-spinner">Loading...</div>;
+    return <LoadingPage />;
   }
 
   return isAuthenticated ? children : <Navigate to="/sign-in" replace />;
@@ -57,7 +59,7 @@ const PublicRoute = ({ children }) => {
   }, []);
 
   if (isLoading) {
-    return <div className="loading-spinner">Loading...</div>;
+    return <LoadingPage />;
   }
 
   return isAuthenticated ? <Navigate to="/dashboard" replace /> : children;
