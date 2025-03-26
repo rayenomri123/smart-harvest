@@ -1,54 +1,43 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub, FaFacebook } from 'react-icons/fa';
 import '../SignIn/SignIn.css';
 
-
 async function createClientAccount(nom, prenom, tel, email, password) {
   try {
-      const response = await fetch('http://localhost:3500/api/register/compte/client', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem("token")}` // Token JWT pour verifyRoles
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-              nom: nom,
-              prenom: prenom,
-              tel: tel,
-              email: email,
-              password: password
-          })
-      });
+    const response = await fetch('http://localhost:3500/api/register/compte/client', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("token")}` // Token JWT pour verifyRoles
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        nom: nom,
+        prenom: prenom,
+        tel: tel,
+        email: email,
+        password: password
+      })
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (!response.ok) {
-          throw new Error(data.error || 'Erreur lors de la création du compte client');
-      }
+    if (!response.ok) {
+      throw new Error(data.error || 'Erreur lors de la création du compte client');
+    }
 
-      console.log('Compte client créé avec succès:', data.compte);
-      return data.compte;
+    console.log('Compte client créé avec succès:', data.compte);
+    return data.compte;
   } catch (error) {
-      console.error('Erreur:', error.message);
-      throw error;
+    console.error('Erreur:', error.message);
+    throw error;
   }
 }
 
-function createClientSync(data) {
-  createClientAccount(data.username, data.username, data.phone, data.email, data.password)
-      .then((compte) => {
-          // Fais quelque chose avec le résultat ici
-          return compte; // Note : ceci ne sera pas retourné de manière synchrone
-      })
-      .catch((error) => {
-          console.error('Erreur:', error.message);
-          throw error; // Ou gère l'erreur différemment
-      });
-}
-
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -118,22 +107,20 @@ const SignUp = () => {
     setIsSubmitting(true);
     
     try {
-      // Here you would typically send the data to your backend
-      // For demonstration, we'll just log it and simulate an API call
+      // Using username for both nom and prenom as in your original code
+      const compte = await createClientAccount(
+        formData.username,
+        formData.username,
+        formData.phone,
+        formData.email,
+        formData.password
+      );
+      console.log('Compte créé:', compte);
       
-      createClientSync(formData,
-        (error, compte) => {
-        if (error) {
-            console.error('Erreur:', error.message);
-        } else {
-            console.log('Compte créé:', compte);
-        }
-    })
+      // Navigate to /dashboard after successful registration
+      navigate('/dashboard');
       
-      // Simulate API call
-
-
-      // Reset form after successful submission
+      // Optionally, reset the form here if needed:
       // setFormData({
       //   username: '',
       //   email: '',

@@ -8,26 +8,19 @@ import {
 } from 'react-icons/fi';
 import { MdOutlineSpa, MdDashboard } from 'react-icons/md';
 import './DashboardSlider.css';
-//import logout from authservice
 import { logout } from '../../services/authService';
 
 const DashboardSlider = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard');
   const userName = "Rayen";
 
   const toggleSlider = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    console.log(`Switched to ${tab} tab`);
-  };
-
   const handleLogout = () => {
     logout();
-    // Add your logout logic here (e.g., clearing auth tokens, redirecting, etc.)
+    window.location.reload();
   };
 
   return (
@@ -35,7 +28,6 @@ const DashboardSlider = () => {
       <div className="dash-slider__content">
         {isOpen && (
           <>
-            {/* Profile Section */}
             <div className="dash-slider__profile">
               <div className="dash-slider__avatar">
                 {userName.charAt(0)}
@@ -46,45 +38,26 @@ const DashboardSlider = () => {
               </div>
             </div>
 
-            {/* Navigation */}
             <nav className="dash-slider__nav">
-              
-            <NavLink to="/dashboard">
-              <div 
-                className={`dash-slider__nav-item ${activeTab === 'dashboard' ? 'dash-slider__nav-item--active' : ''}`}
-                onClick={() => handleTabClick('dashboard')}
-              >
+              <NavLink to="/dashboard" className="dash-slider__nav-item">
                 <span className="dash-slider__nav-icon"><MdDashboard /></span>
                 <span>Dashboard</span>
-              </div>
-            </NavLink>
-              
-              <NavLink to="/plant-profile">
-              <div 
-                className={`dash-slider__nav-item ${activeTab === 'plants' ? 'dash-slider__nav-item--active' : ''}`}
-                onClick={() => handleTabClick('plants')}
-              >
-                <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
-                <span>Plant Profile</span>
-              </div>
               </NavLink>
               
-              <div 
-                className={`dash-slider__nav-item ${activeTab === 'notifications' ? 'dash-slider__nav-item--active' : ''}`}
-                onClick={() => handleTabClick('notifications')}
-              >
+              <NavLink to="/plant-profile" className="dash-slider__nav-item">
+                <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
+                <span>Plant Profile</span>
+              </NavLink>
+              
+              <NavLink to="/notifications" className="dash-slider__nav-item">
                 <span className="dash-slider__nav-icon"><FiBell /></span>
                 <span>Notifications</span>
                 <span className="dash-slider__badge">3</span>
-              </div>
+              </NavLink>
             </nav>
 
-            {/* Logout Button */}
             <div className="dash-slider__footer">
-              <div 
-                className="dash-slider__nav-item dash-slider__logout"
-                onClick={handleLogout}
-              >
+              <div className="dash-slider__nav-item dash-slider__logout" onClick={handleLogout}>
                 <span className="dash-slider__nav-icon"><FiLogOut /></span>
                 <span>Logout</span>
               </div>
@@ -93,7 +66,6 @@ const DashboardSlider = () => {
         )}
       </div>
 
-      {/* Toggle Button */}
       <button 
         className={`dash-slider__toggle ${!isOpen ? 'dash-slider__toggle--closed' : ''}`}
         onClick={toggleSlider}

@@ -61,6 +61,7 @@ const PlantProfile = () => {
             alt={plant.plantName}
             className="plant-profile-image"
           />
+          <h2 className="plant-profile-name">{plant.plantName}</h2>
         </div>
 
         <div className="plant-profile-right">
@@ -77,7 +78,7 @@ const PlantProfile = () => {
                 <div className='P2'>
                 <div className="status-label">
                     <span className={`status-icon ${status.status}`}>
-                        {status.status === 'good' ? '✔' : '✖'}
+                        {status.status === 'good' ? '✔ ' : '✖ '}
                     </span>
                     {status.label}
                     </div>
@@ -91,16 +92,17 @@ const PlantProfile = () => {
         </div>
       </div>
 
-      <h2 className="plant-profile-name">{plant.plantName}</h2>
+      
 
       <div className="plant-profile-buttons">
-        <button className="control-button manual">MANUAL</button>
-        <button className="control-button automatic">AUTOMATIC</button>
-      </div>
-
-      <button className="delete-button" onClick={handleDelete}>
+        <button className="manual-button">MANUAL</button>
+        <button className="automatic-button">AUTOMATIC</button>
+        <button className="delete-button" onClick={handleDelete}>
         DELETE
       </button>
+      </div>
+
+      
     </div>
   );
 };
