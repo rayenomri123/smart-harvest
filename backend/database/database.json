@@ -4,7 +4,7 @@
     "createClientTable":"CREATE TABLE IF NOT EXISTS Compte_Client (id_compte INT PRIMARY KEY,FOREIGN KEY (id_compte) REFERENCES Compte(id_compte) ON DELETE CASCADE)",
     "createRefreshTokensTable":"CREATE TABLE IF NOT EXISTS refresh_tokens (id INT AUTO_INCREMENT PRIMARY KEY,refresh_token VARCHAR(255) NOT NULL,id_compte INT NOT NULL,FOREIGN KEY (id_compte) REFERENCES Compte(id_compte) ON DELETE CASCADE)",
 
-    "createPlantTable":"CREATE TABLE IF NOT EXISTS Plant (id_plant INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255))",
+    "createPlantTable":"CREATE TABLE IF NOT EXISTS Plant (id_plant INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255),mode VARCHAR(255))",
     "createSensorTypeTable":"CREATE TABLE IF NOT EXISTS SensorType (id_sensor_type INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255))",
     "createPinTable":"CREATE TABLE IF NOT EXISTS Pin (id_pin INT AUTO_INCREMENT PRIMARY KEY,id_sensor_type INT,FOREIGN KEY (id_sensor_type) REFERENCES SensorType(id_sensor_type) ON DELETE CASCADE)",
     "createPinPlantTable":"CREATE TABLE IF NOT EXISTS Pin_Plant (id_pin INT,id_plant INT,PRIMARY KEY (id_pin,id_plant),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE,FOREIGN KEY (id_plant) REFERENCES Plant(id_plant) ON DELETE CASCADE)",

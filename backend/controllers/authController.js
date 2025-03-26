@@ -28,7 +28,6 @@ const handleLogin = async (req, res) => {
     else if(client[0]!=null && client.length > 0) {
         role = "client";
     }
-    role = "none";
     const user ={
         id: foundUser.id_compte,
         role: role
@@ -61,7 +60,7 @@ const handleLogin = async (req, res) => {
         }
 
 
-        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: false, maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
         
         res.json({ accessToken });
     } else {

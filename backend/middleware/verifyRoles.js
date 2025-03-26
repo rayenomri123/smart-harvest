@@ -5,7 +5,6 @@ require('dotenv').config();
 const verifyRoles = (...allowedRoles) => {
     return (req, res, next) => {
         const cookies = req.cookies;
-        console.log(req.cookies)
         if (!cookies?.jwt) return res.sendStatus(401);
         const refreshToken = cookies.jwt;
 
@@ -17,7 +16,6 @@ const verifyRoles = (...allowedRoles) => {
 
                 // Récupérer le rôle dans une variable
                 const userRole = decoded.role;
-                console.log("123",decoded)
                 // Vérifier que le rôle existe
                 if (!userRole) return res.sendStatus(401); // Pas de rôle dans le token
 
