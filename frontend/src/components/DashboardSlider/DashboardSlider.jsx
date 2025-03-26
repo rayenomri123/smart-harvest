@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { 
   FiChevronLeft, 
   FiChevronRight, 
@@ -47,6 +48,8 @@ const DashboardSlider = () => {
 
             {/* Navigation */}
             <nav className="dash-slider__nav">
+              
+            <NavLink to="/dashboard">
               <div 
                 className={`dash-slider__nav-item ${activeTab === 'dashboard' ? 'dash-slider__nav-item--active' : ''}`}
                 onClick={() => handleTabClick('dashboard')}
@@ -54,7 +57,9 @@ const DashboardSlider = () => {
                 <span className="dash-slider__nav-icon"><MdDashboard /></span>
                 <span>Dashboard</span>
               </div>
+            </NavLink>
               
+              <NavLink to="/plant-profile">
               <div 
                 className={`dash-slider__nav-item ${activeTab === 'plants' ? 'dash-slider__nav-item--active' : ''}`}
                 onClick={() => handleTabClick('plants')}
@@ -62,6 +67,7 @@ const DashboardSlider = () => {
                 <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
                 <span>Plant Profile</span>
               </div>
+              </NavLink>
               
               <div 
                 className={`dash-slider__nav-item ${activeTab === 'notifications' ? 'dash-slider__nav-item--active' : ''}`}

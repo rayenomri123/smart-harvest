@@ -1,10 +1,10 @@
-// src/pages/Dashboard/Dashboard.jsx
+// In Dashboard.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PlantCard from '../../components/PlantCard/PlantCard';
 import PlantImageSelector from '../../components/PlantImageSelector/PlantImageSelector';
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './Dashboard.css';
-import { useNavigate } from 'react-router-dom';
 import { auth_test } from '../../services/authService';
 
 const Dashboard = () => {
@@ -68,6 +68,11 @@ const Dashboard = () => {
     setIsSelectorOpen(false);
   };
 
+  // New click handler to navigate with plant data
+  const handlePlantClick = (plant) => {
+    navigate('/plant-profile', { state: { plant } });
+  };
+
   return (
     <div className="dashboard-container">
       <DashboardSlider />
@@ -75,12 +80,13 @@ const Dashboard = () => {
       <div className="plants-grid-container">
         <div className="plants-container">
           {plants.map(plant => (
-            <PlantCard 
-              key={plant.id}
-              plantName={plant.plantName}
-              imageUrl={plant.imageUrl}
-              addedDate={plant.addedDate}
-            />
+            <div key={plant.id} onClick={() => handlePlantClick(plant)}>
+              <PlantCard 
+                plantName={plant.plantName}
+                imageUrl={plant.imageUrl}
+                addedDate={plant.addedDate}
+              />
+            </div>
           ))}
           
           <div className="plant-card add-button" onClick={handleAddPlantClick}>

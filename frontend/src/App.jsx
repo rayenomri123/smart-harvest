@@ -11,6 +11,8 @@ import SignUp from './pages/SignUp/SignUp.jsx';
 import ContactUs from './pages/ContactUs/ContactUs.jsx';
 import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import LoadingPage from './components/LoadingPage/LoadingPage.jsx';
+import PlantProfile from './pages/PlantProfile/PlantProfile.jsx';
+import About from './pages/About/About.jsx';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -74,6 +76,15 @@ function App() {
         <Route path="/home" element={<Home />} />
         
         <Route 
+          path="/about" 
+          element={
+            <ProtectedRoute>
+              <About />
+            </ProtectedRoute>
+          } 
+        />
+
+        <Route 
           path="/sign-in" 
           element={
             <PublicRoute>
@@ -99,6 +110,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/plant-profile" 
+          element={
+            <ProtectedRoute>
+              <PlantProfile />
             </ProtectedRoute>
           } 
         />
