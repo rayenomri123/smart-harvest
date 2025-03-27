@@ -19,8 +19,12 @@ const DashboardSlider = () => {
   };
 
   const handleLogout = () => {
-    logout();
-    window.location.reload();
+    logout().then(resultat => {
+        location.reload();
+    })
+    .catch(erreur => {
+        console.error(erreur);
+    });;
   };
 
   return (
