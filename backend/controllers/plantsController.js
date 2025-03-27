@@ -23,8 +23,8 @@ const getAllPlants = async (req, res) => {
 
 const createPlant = async (req, res) => {
     try {
-        const {name} = req.body;
-        const [rows] = await pool.query('INSERT INTO Plant (nom) VALUES (?)', [name]);
+        const {nom,mode} = req.body;
+        const [rows] = await pool.query('INSERT INTO Plant (nom,mode) VALUES (?,?)', [nom,mode]);
         res.status(201).json(rows);
     } catch (error) {
         console.error(error);
@@ -34,10 +34,10 @@ const createPlant = async (req, res) => {
 
 const addSensor = async (req, res) => {
     try {
-        const {id_pin, nom_capteur} = req.body;
+        const {id_pin, id_sensor_type} = req.body;
+        const [rows2] = await pool.query('INSERT IGNORE INTO Pin (id_pin, id_sensor_type) VALUES (?, ?)', [id_pin, id_sensor_type]);
         const [rows] = await pool.query('INSERT INTO Pin_Plant (id_plant, id_pin) VALUES (?, ?)', [req.params.id, id_pin]);
-        const [rows2] = await pool.query('INSERT INTO Pin (id_pin, nom_capteur) VALUES (?, ?)', [id_pin, nom_capteur]);
-        res.status(201).json(rows, rows2.nom_capteur);
+        res.status(201).json(rows);
     } catch (error) {
         console.error(error);
         res.status(500).json({error: 'Internal server error'});
