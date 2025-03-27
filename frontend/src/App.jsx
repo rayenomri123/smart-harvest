@@ -112,7 +112,7 @@ function App() {
           } 
         />
         <Route 
-          path="/plant-profile" 
+          path="/:id/plant-profile" 
           element={
             <ProtectedRoute>
               <PlantProfile />

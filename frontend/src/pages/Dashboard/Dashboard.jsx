@@ -5,14 +5,27 @@ import PlantCard from '../../components/PlantCard/PlantCard';
 import PlantImageSelector from '../../components/PlantImageSelector/PlantImageSelector';
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './Dashboard.css';
+import { auth_test } from '../../services/authService';
+import {main,getLuminosity} from '../../services/deteService';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [plants, setPlants] = useState([]); // Initialisé comme tableau vide
+  main();
+  useEffect(() => {
+    // Authentication check
+    auth_test().then(result => {
+      if (!result) {
+        navigate("/sign-in"); // Fixed the route to match your App.js
+      }
+    }).catch(error => {
+      console.error("Authentication error:", error);
+    });
+  }, [navigate]);
 
-useEffect(() => {
-  const fetchPlants = async () => {
+  useEffect(() => {
+    const fetchPlants = async () => {
     try {
       // Récupérer le token (par exemple depuis localStorage)
       const token = localStorage.getItem('token');
@@ -31,7 +44,6 @@ useEffect(() => {
       }
 
       const data = await response.json();
-      console.log(data)
       data.map(plant => ({
         id: plant.id_plant,
         imageUrl: "../src/assets/plant1.png",
@@ -78,7 +90,7 @@ useEffect(() => {
 
   // New click handler to navigate with plant data
   const handlePlantClick = (plant) => {
-    navigate(`/${plant.id}/plant-profile`, { state: { plant } });
+    navigate(`/${plant.id_plant}/plant-profile`, { state: { plant } });
   };
 
   return (
