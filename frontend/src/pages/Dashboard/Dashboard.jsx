@@ -48,6 +48,7 @@ const Dashboard = () => {
         plantName: plant.nom,
         mode: plant.mode
     }));
+    console.log(data);
       setPlants(data); // Met à jour le state avec les données de l'API
     } catch (error) {
       console.error('Erreur:', error);
