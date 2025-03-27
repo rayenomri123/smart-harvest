@@ -1,6 +1,16 @@
 const {pool} = require('../database/connect');
 require('dotenv').config();
 
+const getAllSensors = async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM SensorType');
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+}
+
 const getAllPlants = async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT * FROM Plant');
@@ -54,13 +64,6 @@ const getPlantInfo = async (req, res) => {
     }
 };
 
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * Supprime une plante par son id
- * @param {ObjectId} req.params.id - L'id de la plante
- * @returns {Object} - Un objet contenant le resultat de la suppression
- */
-/******  d3bad594-e200-4f33-869a-6221587421fb  *******/
 const deletePlant = async (req, res) => {
     try {
         const [rows] = await pool.query('DELETE FROM Plant WHERE id_plant = ?', [req.params.id]);
@@ -71,4 +74,4 @@ const deletePlant = async (req, res) => {
     }
 };
 
-module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant};
+module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant,getAllSensors};

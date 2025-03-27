@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PlantFormModal.css';
+import {get_sensors} from '../../services/authService';
 
 const PlantFormModal = ({ onClose, onSubmit, selectedImage }) => {
   const [plantData, setPlantData] = useState({
@@ -15,8 +16,10 @@ const PlantFormModal = ({ onClose, onSubmit, selectedImage }) => {
     'GPIO21', 'GPIO22', 'GPIO23', 'GPIO24', 'GPIO25',
     'GPIO26', 'GPIO27', 'A0', 'A1', 'A2', 'A3'
   ];
-
-  const valueTypeOptions = ['value1', 'value2', 'value3'];
+  get_sensors().then((data) => 
+    console.log(data)
+).catch((error) => console.error(error));
+const valueTypeOptions = ['le contenu de la fonction get sensor'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;

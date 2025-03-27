@@ -74,6 +74,11 @@ async function initializeDatabase() {
         // const [result] = await pool.execute(`INSERT INTO Compte (adresse_email, mot_de_passe, numero_tel, nom, prenom) VALUES ('admin', '${password}', 'admin', 'admin', 'admin');`);
         // await pool.execute("INSERT INTO Compte_Admin (id_compte) VALUES (?);", [result.insertId]);
 
+        //add sensors
+
+        // await pool.execute(`INSERT INTO SensorType (nom) VALUES ('temperature'), ('humidite sol'), ('humidite air'), ('luminosite'), ('pompe a eau'), ('ultra son');`);
+
+
         // await displayTables(pool);//afficher la base de donner
         
         // const [table] = await pool.execute('select * from Compte;');

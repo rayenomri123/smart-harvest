@@ -1,3 +1,25 @@
+export async function get_sensors() {
+  try {
+    const response = await fetch("http://localhost:3500/api/plants/all_sensors", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Token refresh error:", error);
+    return false;
+  }
+}
+
 export async function refreshToken() {
   try {
     const response = await fetch("http://localhost:3500/api/refresh", {
