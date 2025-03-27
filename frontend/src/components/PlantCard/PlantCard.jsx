@@ -18,7 +18,6 @@ const PlantCard = ({ plantName, imageUrl, addedDate }) => {
       </div>
       <div className="plant-info">
         <h3 className="plant-name-card">{plantName}</h3>
-        <p className="plant-date">added {formatDate(addedDate)}</p>
       </div>
     </div>
   );

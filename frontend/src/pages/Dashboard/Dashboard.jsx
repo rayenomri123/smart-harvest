@@ -5,35 +5,54 @@ import PlantCard from '../../components/PlantCard/PlantCard';
 import PlantImageSelector from '../../components/PlantImageSelector/PlantImageSelector';
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './Dashboard.css';
-import { auth_test } from '../../services/authService';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
-  const [plants, setPlants] = useState([
-    {
-      id: 1,
-      plantName: "Monstera Deliciosa",
-      imageUrl: "../src/assets/plant1.png",
-      addedDate: "2025-03-13",
-      careDetails: {
-        water: "weekly",
-        sunlight: "medium",
-        notes: "Keep soil slightly moist"
-      }
-    }
-  ]);
+  const [plants, setPlants] = useState([]); // Initialisé comme tableau vide
 
-  useEffect(() => {
-    // Authentication check
-    auth_test().then(result => {
-      if (!result) {
-        navigate("/sign-in"); // Fixed the route to match your App.js
+useEffect(() => {
+  const fetchPlants = async () => {
+    try {
+      // Récupérer le token (par exemple depuis localStorage)
+      const token = localStorage.getItem('token');
+
+      const response = await fetch('http://localhost:3500/api/plants/all', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Envoi du token dans l'en-tête
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include' // Pour envoyer les cookies avec la requête
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors du chargement des plantes');
       }
-    }).catch(error => {
-      console.error("Authentication error:", error);
-    });
-  }, [navigate]);
+
+      const data = await response.json();
+      console.log(data)
+      data.map(plant => ({
+        id: plant.id_plant,
+        imageUrl: "../src/assets/plant1.png",
+        plantName: plant.nom,
+        mode: plant.mode
+    }));
+      setPlants(data); // Met à jour le state avec les données de l'API
+    } catch (error) {
+      console.error('Erreur:', error);
+      // Optionnel : garder les données par défaut en cas d'erreur
+      setPlants([{
+        id: 1,
+        plantName: "erreur plant",
+        imageUrl: "../src/assets/plant1.png",
+        mode: "unknew"
+      }]);
+    }
+  };
+
+  fetchPlants();
+}, []);
 
   useEffect(() => {
     // Modal handling
@@ -52,25 +71,14 @@ const Dashboard = () => {
     setIsSelectorOpen(true);
   };
 
-  const handleAddNewPlant = (plantData) => {
-    const newPlant = {
-      id: plants.length + 1,
-      plantName: plantData.name,
-      imageUrl: plantData.imageUrl,
-      addedDate: new Date().toISOString().split('T')[0],
-      careDetails: {
-        water: plantData.waterFrequency,
-        sunlight: plantData.sunlight,
-        notes: plantData.notes
-      }
-    };
-    setPlants([...plants, newPlant]);
+  const handleAddNewPlant = () => {
+    location.reload();
     setIsSelectorOpen(false);
   };
 
   // New click handler to navigate with plant data
   const handlePlantClick = (plant) => {
-    navigate('/plant-profile', { state: { plant } });
+    navigate(`/${plant.id}/plant-profile`, { state: { plant } });
   };
 
   return (
@@ -81,10 +89,12 @@ const Dashboard = () => {
         <div className="plants-container">
           {plants.map(plant => (
             <div key={plant.id} onClick={() => handlePlantClick(plant)}>
+
               <PlantCard 
                 plantName={plant.plantName}
                 imageUrl={plant.imageUrl}
-                addedDate={plant.addedDate}
+                mode={plant.mode}
+                id={plant.id}
               />
             </div>
           ))}
