@@ -6,13 +6,11 @@ import PlantImageSelector from '../../components/PlantImageSelector/PlantImageSe
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './Dashboard.css';
 import { auth_test } from '../../services/authService';
-import {main,getLuminosity} from '../../services/deteService';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [plants, setPlants] = useState([]); // Initialisé comme tableau vide
-  main();
   useEffect(() => {
     // Authentication check
     auth_test().then(result => {

@@ -3,12 +3,13 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
+import {getLuminosity} from '../../services/deteService';
 
 const PlantProfile = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { plant } = location.state || {};
-
+  getLuminosity().then(result => console.log(result));//need to send plant id
   // Sample status data structure (update according to your API)
   const statuses = [
     { 
