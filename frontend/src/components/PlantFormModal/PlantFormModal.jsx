@@ -31,8 +31,7 @@ const PlantFormModal = ({ onClose, onSubmit, selectedImage }) => {
       } catch (error) {
         console.error('Erreur lors du chargement des capteurs:', error);
         setValueTypeOptions([
-          { value: 1, label: 'temperature' },
-          { value: 2, label: 'humidite sol' },
+          { value: 2, label: 'humidite sol et temperature' },
           { value: 3, label: 'humidite air' },
           { value: 4, label: 'luminosite' },
           { value: 5, label: 'pompe a eau' },

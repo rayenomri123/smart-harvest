@@ -2,9 +2,9 @@
 const BASE_URL = 'http://192.168.1.16:8000/api'; // URL de votre serveur FastAPI
 
 // Fonction générique pour gérer les requêtes fetch
-async function fetchFromApi(endpoint, options = {}) {
+async function fetchFromApi(endpoint,plant_id, options = {}) {
     try {
-        const response = await fetch(`${BASE_URL}${endpoint}`, {
+        const response = await fetch(`${BASE_URL}${endpoint}?plant_id=${plant_id}`, {
             ...options,
             headers: {
                 'Content-Type': 'application/json',
@@ -22,33 +22,43 @@ async function fetchFromApi(endpoint, options = {}) {
 }
 
 // Fonctions spécifiques pour chaque endpoint
-export async function getSoilHumidity() {
-    return await fetchFromApi('/humidity_sol', {
+export async function getSoilHumidity(plant_id) {
+    return await fetchFromApi('/humidity_sol',plant_id, {
         method: 'GET'
     });
 }
 
-export async function getLuminosity() {
-    return await fetchFromApi('/ldr', {
+export async function getLuminosity(plant_id) {
+    return await fetchFromApi('/ldr',plant_id, {
         method: 'GET'
     });
 }
 
-export async function getDistance() {
-    return await fetchFromApi('/distance', {
+export async function getDistance(plant_id) {
+    return await fetchFromApi('/distance',plant_id, {
         method: 'GET'
     });
 }
 
-export async function getTempHumidity() {
-    return await fetchFromApi('/temp_humidity', {
+export async function getTempHumidity(plant_id) {
+    return await fetchFromApi('/temp_humidity',plant_id, {
         method: 'GET'
     });
 }
 
-export async function controlRelay(state) {
-    return await fetchFromApi('/relay', {
+
+export async function controlRelay(plant_id,time) {
+    await fetchFromApi('/relay',plant_id, {
         method: 'POST',
-        body: JSON.stringify({ state })
+        body: JSON.stringify({ state : 1 })
+    });
+    
+    await new Promise(resolve => {
+        setTimeout(resolve, time);
+    });
+
+    await fetchFromApi('/relay',plant_id, {
+        method: 'POST',
+        body: JSON.stringify({ state : 0 })
     });
 }

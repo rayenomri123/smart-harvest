@@ -76,7 +76,7 @@ async function initializeDatabase() {
 
         //add sensors
 
-        // await pool.execute(`INSERT INTO SensorType (nom) VALUES ('temperature'), ('humidite sol'), ('humidite air'), ('luminosite'), ('pompe a eau'), ('ultra son');`);
+        // await pool.execute(`INSERT INTO SensorType (nom) VALUES ('humidite sol'), ('humidite air'), ('luminosite'), ('pompe a eau'), ('ultra son');`);
 
 
         // await displayTables(pool);//afficher la base de donner
