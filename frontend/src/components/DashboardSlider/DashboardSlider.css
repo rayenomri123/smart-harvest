@@ -166,7 +166,7 @@
 @media (max-width: 768px) {
   /* When open, slider takes 80% of viewport width */
   .dash-slider--open {
-    width: 50%;
+    width: 70%;
   }
   
   .dash-slider__content {
@@ -176,7 +176,7 @@
   
   /* Toggle button adjusts based on slider width */
   .dash-slider__toggle {
-    left: 50%;
+    left: 70%;
   }
   
   .dash-slider__toggle--closed {
