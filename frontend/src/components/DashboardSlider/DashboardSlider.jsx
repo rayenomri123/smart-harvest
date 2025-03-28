@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   FiChevronLeft, 
@@ -12,6 +12,7 @@ import { logout } from '../../services/authService';
 
 const DashboardSlider = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const sliderRef = useRef(null);
   const userName = "Rayen";
 
   const toggleSlider = () => {
@@ -19,16 +20,32 @@ const DashboardSlider = () => {
   };
 
   const handleLogout = () => {
-    logout().then(resultat => {
+    logout()
+      .then(() => {
         location.reload();
-    })
-    .catch(erreur => {
-        console.error(erreur);
-    });;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
+  // Click outside handler to close the slider
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sliderRef.current && !sliderRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={`dash-slider ${isOpen ? 'dash-slider--open' : 'dash-slider--closed'}`}>
+    <div ref={sliderRef} className={`dash-slider ${isOpen ? 'dash-slider--open' : 'dash-slider--closed'}`}>
       <div className="dash-slider__content">
         {isOpen && (
           <>

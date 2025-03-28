@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-/* Open/Closed States */
+/* Open/Closed States (Desktop) */
 .dash-slider--open {
   width: 300px;
 }
@@ -78,7 +78,7 @@
   padding: 12px 15px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease;
   position: relative;
   text-decoration: none;
   color: inherit;
@@ -116,7 +116,6 @@
 /* Toggle Button */
 .dash-slider__toggle {
   position: fixed;
-  left: 300px;
   top: 50%;
   transform: translateY(-50%);
   width: 30px;
@@ -135,27 +134,13 @@
   z-index: 1001;
 }
 
-.dash-slider__toggle--closed {
-  left: 0;
+/* Positioning for Toggle Button (Desktop) */
+.dash-slider__toggle {
+  left: 300px;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .dash-slider--open {
-      width: 220px;
-  }
-
-  .dash-slider__content {
-      min-width: 220px;
-  }
-
-  .dash-slider__toggle {
-      left: 190px;
-  }
-
-  .dash-slider__toggle--closed {
-      left: 0;
-  }
+.dash-slider__toggle--closed {
+  left: 0;
 }
 
 /* Footer Section */
@@ -175,4 +160,55 @@
 
 .dash-slider__logout:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Adjustments for Mobile Devices */
+@media (max-width: 768px) {
+  /* When open, slider takes 80% of viewport width */
+  .dash-slider--open {
+    width: 50%;
+  }
+  
+  .dash-slider__content {
+    min-width: 80%;
+    padding: 15px;
+  }
+  
+  /* Toggle button adjusts based on slider width */
+  .dash-slider__toggle {
+    left: 50%;
+  }
+  
+  .dash-slider__toggle--closed {
+    left: 0;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .dash-slider__avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+  
+  .dash-slider__profile-info h3 {
+    font-size: 14px;
+  }
+  
+  .dash-slider__nav-icon {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  
+  .dash-slider__nav-item {
+    padding: 10px 12px;
+  }
+  
+  .dash-slider__badge {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+    right: 10px;
+  }
 }
