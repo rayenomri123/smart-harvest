@@ -14,6 +14,7 @@ import LoadingPage from './components/LoadingPage/LoadingPage.jsx';
 import PlantProfile from './pages/PlantProfile/PlantProfile.jsx';
 import About from './pages/About/About.jsx';
 import './App.css';
+import NotificationPage from './pages/NotificatonsPage/NotificationsPage.jsx';
 
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -116,6 +117,15 @@ function App() {
           element={
             <ProtectedRoute>
               <PlantProfile />
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route 
+          path="/notifications" 
+          element={
+            <ProtectedRoute>
+              <NotificationPage />
             </ProtectedRoute>
           } 
         />
