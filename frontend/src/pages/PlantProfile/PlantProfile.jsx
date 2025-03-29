@@ -52,10 +52,14 @@ const PlantProfile = () => {
   const updateAllSensors = async () => {
     try {
       const sensors = await getSensorsById(id_p);
+      
+
       const humiditeAirSensor = sensors.find(sensor => sensor.nom === "humidite air");
       const idSensorTypeHumiditeAir = humiditeAirSensor?.id_sensor_type;
+
       // Vérification + ajout conditionnel
       const shouldAddPump = !!humiditeAirSensor; // Convertit en booléen
+
       if (shouldAddPump) {
         sensors.push({ id_sensor_type: idSensorTypeHumiditeAir, nom: "temperature" }); // Modifie le tableau directement
       }
