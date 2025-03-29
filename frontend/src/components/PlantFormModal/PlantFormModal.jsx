@@ -26,13 +26,15 @@ const PlantFormModal = ({ onClose, onSubmit, selectedImage }) => {
         const data = await get_sensors();
         setValueTypeOptions(data.map(sensor => ({
           value: sensor.id_sensor_type,
-          label: sensor.nom
+          label: sensor.nom === "humidite air" 
+      ? "humidite air et temperature" 
+      : sensor.nom
         })));
       } catch (error) {
         console.error('Erreur lors du chargement des capteurs:', error);
         setValueTypeOptions([
-          { value: 2, label: 'humidite sol et temperature' },
-          { value: 3, label: 'humidite air' },
+          { value: 2, label: 'humidite sol' },
+          { value: 3, label: 'humidite air et temperature' },
           { value: 4, label: 'luminosite' },
           { value: 5, label: 'pompe a eau' },
           { value: 6, label: 'ultra son' }

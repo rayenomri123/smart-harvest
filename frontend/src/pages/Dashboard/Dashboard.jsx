@@ -93,7 +93,6 @@ const Dashboard = () => {
       <div className="plants-grid-container">
         <div className="plants-container">
           {plants.map(plant => (
-          console.log(plants),
             <div key={plant.id} onClick={() => handlePlantClick(plant)}>
 
               <PlantCard 

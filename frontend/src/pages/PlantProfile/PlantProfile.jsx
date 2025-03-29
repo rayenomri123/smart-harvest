@@ -56,7 +56,6 @@ const PlantProfile = () => {
       if (shouldAddPump) {
         sensors.push({ id_sensor_type: 2, nom: "temperature" }); // Modifie le tableau directement
       }
-      console.log(sensors)
       
       const updatedStatuses = await Promise.all(
         sensors.filter(sensor => sensor.nom !== 'pompe a eau').map(async (sensor) => {
