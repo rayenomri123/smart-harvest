@@ -18,13 +18,13 @@ const PlantProfile = () => {
     switch(sensorId) {
       case 'humidite sol':
         const res1 = await getSoilHumidity(id_p);
-        return res1.humiditer_sol.split(".")[0];
+        return res1.humiditer_sol.toString().split(".")[0];
       case 'humidite air':
         const res2 = await getTempHumidity(id_p);
-        if (type==1)
-          return res2.humidity
-        else
-          return res2.temperature
+        return res2.humidity
+        case 'temperature':
+          const res5 = await getTempHumidity(id_p);
+          return res5.temp
       case 'luminosite':
         const res3 = await getLuminosity(id_p);
         return res3.Luminosite.toString().split(".")[0];
@@ -48,22 +48,27 @@ const PlantProfile = () => {
   };
   
   // controlRelay(id_p,1000).then(result => console.log(result));
-  getSensorData()
+
   const updateAllSensors = async () => {
     try {
       const sensors = await getSensorsById(id_p);
+      const shouldAddPump = sensors.some(sensor => sensor.nom === "humidite air");
+      if (shouldAddPump) {
+        sensors.push({ id_sensor_type: 2, nom: "temperature" }); // Modifie le tableau directement
+      }
+      console.log(sensors)
       
       const updatedStatuses = await Promise.all(
-        sensors.map(async (sensor) => {
-          const value = await getSensorData(sensor.nom);
+        sensors.filter(sensor => sensor.nom !== 'pompe a eau').map(async (sensor) => {
+            const value = await getSensorData(sensor.nom);
+            return {
+              type: sensor.nom,
+              value: value,
+              status: determineStatus(sensor.nom, value),
+              label: sensor.nom.toUpperCase(),
+              note: '' // Vous pouvez ajouter une logique pour générer des notes
+            };
           
-          return {
-            type: sensor.nom,
-            value: value,
-            status: determineStatus(sensor.nom, value),
-            label: sensor.nom.toUpperCase(),
-            note: '' // Vous pouvez ajouter une logique pour générer des notes
-          };
         })
       );
       
