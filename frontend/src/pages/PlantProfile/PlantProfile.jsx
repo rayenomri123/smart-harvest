@@ -1,9 +1,10 @@
 // src/pages/PlantProfile/PlantProfile.jsx
-import React from 'react';
+import React,{useEffect,useState} from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
-import {getLuminosity,controlRelay} from '../../services/deteService';
+import {getLuminosity,controlRelay,getSensorsById,getSoilHumidity,getTempHumidity  } from '../../services/deteService';
 
 const PlantProfile = () => {
   const location = useLocation();
@@ -11,39 +12,108 @@ const PlantProfile = () => {
   const { plant } = location.state || {};
   const chemin = window.location.pathname; // "/utilisateur/123"
   const id_p = chemin.split('/')[1];
-  getLuminosity(id_p).then(result => console.log(result));//need to send plant id
-  controlRelay(id_p,1000).then(result => console.log(result));
-  // Sample status data structure (update according to your API)
-  const statuses = [
-    { 
-      type: 'moisture',
-      value: 60,
-      status: 'good',
-      label: 'MOISTURE',
-      note: ''
-    },
-    {
-      type: 'light',
-      value: 60,
-      status: 'low',
-      label: 'LIGHT',
-      note: 'take it to sunlight'
-    },
-    {
-      type: 'ph',
-      value: 60,
-      status: 'good',
-      label: 'PH',
-      note: 'add the compliments'
-    },
-    {
-      type: 'tank',
-      value: 60,
-      status: 'low',
-      label: 'TANK',
-      note: 'add water to the tank'
+  const [statuses, setStatuses] = useState([]);
+
+  const getSensorData = async (sensorId,type=1) => {
+    switch(sensorId) {
+      case 'humidite sol':
+        const res1 = await getSoilHumidity(id_p);
+        return res1.humiditer_sol.split(".")[0];
+      case 'humidite air':
+        const res2 = await getTempHumidity(id_p);
+        if (type==1)
+          return res2.humidity
+        else
+          return res2.temperature
+      case 'luminosite':
+        const res3 = await getLuminosity(id_p);
+        return res3.Luminosite.toString().split(".")[0];
+      case 'ultra son':
+        const res4 = await getDistance(id_p);
+        return res4.distance
+      // case 'pompe a eau':
+      //   return await controlRelay(id_p);
+      default:
+        return null;
     }
-  ];
+  };
+  const determineStatus = (type, value) => {
+    // Implémentez votre logique de statut ici
+    // Exemple simplifié :
+    if (type === 'light') {
+      return value > 50 ? 'good' : 'low';
+    }
+    // Ajoutez d'autres conditions pour les autres types
+    return 'good';
+  };
+  
+  // controlRelay(id_p,1000).then(result => console.log(result));
+  getSensorData()
+  const updateAllSensors = async () => {
+    try {
+      const sensors = await getSensorsById(id_p);
+      
+      const updatedStatuses = await Promise.all(
+        sensors.map(async (sensor) => {
+          const value = await getSensorData(sensor.nom);
+          
+          return {
+            type: sensor.nom,
+            value: value,
+            status: determineStatus(sensor.nom, value),
+            label: sensor.nom.toUpperCase(),
+            note: '' // Vous pouvez ajouter une logique pour générer des notes
+          };
+        })
+      );
+      
+      setStatuses(updatedStatuses);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour des capteurs:", error);
+    }
+  };
+
+  useEffect(() => {
+    updateAllSensors(); // Première exécution
+    
+    const interval = setInterval(() => {
+      updateAllSensors();
+    }, 1000); // Toutes les 10 secondes
+
+    return () => clearInterval(interval); // Nettoyage
+  }, [id_p]);
+
+  // Sample status data structure (update according to your API)
+  // const statuses = [
+  //   { 
+  //     type: 'moisture',
+  //     value: 60,
+  //     status: 'good',
+  //     label: 'MOISTURE',
+  //     note: ''
+  //   },
+  //   {
+  //     type: 'light',
+  //     value: 60,
+  //     status: 'low',
+  //     label: 'LIGHT',
+  //     note: 'take it to sunlight'
+  //   },
+  //   {
+  //     type: 'ph',
+  //     value: 60,
+  //     status: 'good',
+  //     label: 'PH',
+  //     note: 'add the compliments'
+  //   },
+  //   {
+  //     type: 'tank',
+  //     value: 60,
+  //     status: 'low',
+  //     label: 'TANK',
+  //     note: 'add water to the tank'
+  //   }
+  // ];
 
   if (!plant) {
     return <div className='dashboard-container'><DashboardSlider /><p>Please select a plant.</p></div>;

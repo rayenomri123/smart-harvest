@@ -21,6 +21,31 @@ async function fetchFromApi(endpoint,plant_id, options = {}) {
     }
 }
 
+export async function getSensorsById(id_plant) {
+    try {
+        const response = await fetch("http://localhost:3500/api/plants/get_sensors_id", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            id_plant:id_plant
+          }),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Token refresh error:", error);
+        return false;
+    }
+}
+
 // Fonctions spécifiques pour chaque endpoint
 export async function getSoilHumidity(plant_id) {
     return await fetchFromApi('/humidity_sol',plant_id, {

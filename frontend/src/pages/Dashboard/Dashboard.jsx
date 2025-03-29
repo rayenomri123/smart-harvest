@@ -21,7 +21,6 @@ const Dashboard = () => {
       console.error("Authentication error:", error);
     });
   }, [navigate]);
-
   useEffect(() => {
     const fetchPlants = async () => {
     try {
@@ -42,12 +41,7 @@ const Dashboard = () => {
       }
 
       const data = await response.json();
-      data.map(plant => ({
-        id: plant.id_plant,
-        imageUrl: "../src/assets/plant1.png",
-        plantName: plant.nom,
-        mode: plant.mode
-    }));
+      
       setPlants(data); // Met à jour le state avec les données de l'API
     } catch (error) {
       console.error('Erreur:', error);
@@ -56,7 +50,8 @@ const Dashboard = () => {
         id: 1,
         plantName: "erreur plant",
         imageUrl: "../src/assets/plant1.png",
-        mode: "unknew"
+        mode: "unknew",
+        date: Date.now()
       }]);
     }
   };
@@ -98,13 +93,15 @@ const Dashboard = () => {
       <div className="plants-grid-container">
         <div className="plants-container">
           {plants.map(plant => (
+          console.log(plants),
             <div key={plant.id} onClick={() => handlePlantClick(plant)}>
 
               <PlantCard 
-                plantName={plant.plantName}
-                imageUrl={plant.imageUrl}
+                plantName={plant.nom}
+                imageUrl='../src/assets/plant1.png'
                 mode={plant.mode}
-                id={plant.id}
+                id={plant.id_plant}
+                date={plant.date}
               />
             </div>
           ))}

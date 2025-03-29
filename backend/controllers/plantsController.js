@@ -11,6 +11,17 @@ const getAllSensors = async (req, res) => {
     }
 }
 
+const getSensorsById = async (req, res) => {
+    try {
+        const {id_plant} = req.body;
+        const [rows] = await pool.query('SELECT s.id_sensor_type,s.nom FROM SensorType s, Pin_Plant pp, Pin p where p.id_pin=pp.id_pin and p.id_sensor_type=s.id_sensor_type and pp.id_plant=?', [id_plant]);
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+}
+
 const getAllPlants = async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT * FROM Plant');
@@ -23,8 +34,8 @@ const getAllPlants = async (req, res) => {
 
 const createPlant = async (req, res) => {
     try {
-        const {nom,mode} = req.body;
-        const [rows] = await pool.query('INSERT INTO Plant (nom,mode) VALUES (?,?)', [nom,mode]);
+        const {nom,mode,date} = req.body;
+        const [rows] = await pool.query('INSERT INTO Plant (nom,mode,date) VALUES (?,?,?)', [nom,mode,date]);
         res.status(201).json(rows);
     } catch (error) {
         console.error(error);
@@ -74,4 +85,4 @@ const deletePlant = async (req, res) => {
     }
 };
 
-module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant,getAllSensors};
+module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant,getAllSensors,getSensorsById};

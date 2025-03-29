@@ -8,6 +8,7 @@ const roles_list = require('../config/roleList');
 
 router.get('/all', plantsController.getAllPlants);
 router.get('/all_sensors', plantsController.getAllSensors);
+router.post('/get_sensors_id', plantsController.getSensorsById);
 router.post('/create',verifyRoles(roles_list.admin), plantsController.createPlant);
 router.post('/:id/addSensor',verifyRoles(roles_list.admin), plantsController.addSensor);
 router.post('/:id/deleteSensor',verifyRoles(roles_list.admin), plantsController.deleteSensor);
