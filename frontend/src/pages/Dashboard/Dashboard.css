@@ -25,8 +25,10 @@
   justify-content: center;
   background-color: #f8f8f8;
   border: 1.5px dashed #2c5432;
+  border-radius: 8px;
   width: 180px;
-  height: 191px;
+  height: 227px;
+  margin-top: -0.6px;
   transition: all 0.3s ease;
 }
 
@@ -48,11 +50,11 @@
   color: #2c5432;
   font-weight: 200;
   line-height: 1;
-  transition: transform 0.2s ease;
+  transition: transform 0.4s ease;
 }
 
 .add-button:hover .plus-sign {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 /* Modal Styles */
@@ -109,10 +111,8 @@ body.modal-open {
   
   .plants-container {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 35px;
   }
   
-  .add-button {
-    width: 150px;
-    height: 180px;
-  }
+  
 }

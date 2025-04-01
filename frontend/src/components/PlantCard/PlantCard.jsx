@@ -18,8 +18,8 @@ const PlantCard = ({ plantName, imageUrl, date, mode, id }) => {
   };
 
   return (
-    <div className="plant-card">
-      <div className="image-container">
+    <div className="plant-card-container">
+      <div className="image-card-container">
         <img 
           src={imageUrl || '/placeholder-plant.jpg'} 
           alt={plantName} 
@@ -28,8 +28,8 @@ const PlantCard = ({ plantName, imageUrl, date, mode, id }) => {
       </div>
       <div className="plant-info">
         <h3 className="plant-name-card">{plantName}</h3>
-        <h3 className="plant-name-card">created : {convertirMsEnDate(date)}</h3>
-        <h3 className="plant-name-card">{mode}</h3>
+        <h3 className="plant-mode-card">{mode}</h3>
+        <h3 className="plant-date-card">created : {convertirMsEnDate(date)}</h3>
       </div>
     </div>
   );
