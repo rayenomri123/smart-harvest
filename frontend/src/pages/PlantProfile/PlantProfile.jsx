@@ -198,7 +198,6 @@ const PlantProfile = () => {
       
 
       <div className="plant-profile-buttons">
-        <button className="manual-button">MANUAL</button>
         <button className="automatic-button" onClick={handleAutomatic}>AUTOMATIC</button>
         <button className="delete-button" onClick={handleDelete}>
         DELETE
