@@ -6,6 +6,7 @@
   width: 180px;
   transition: transform 0.2s ease;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  cursor: pointer;
 }
 
 .plant-card-container:hover {

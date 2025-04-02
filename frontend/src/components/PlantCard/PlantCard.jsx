@@ -17,7 +17,7 @@ const PlantCard = ({ plantName, imageUrl, date, mode, id}) => {
     <div className="plant-card-container">
       <div className="image-card-container">
         <img 
-          src={imageUrl || '/placeholder-plant.jpg'} 
+          src={imageUrl || '/placeholder-plant.jpg'}
           alt={plantName} 
           className="plant-image"
         />

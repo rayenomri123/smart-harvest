@@ -25,11 +25,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
   }
   
   .plant-profile-image {
     max-width: 300px;
-    width:  70%;
+    width:  45%;
     height: auto;
   }
   
@@ -140,3 +141,4 @@
   .delete-button:hover {
     background-color: #c9302c;
   }
+  
