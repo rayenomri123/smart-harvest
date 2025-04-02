@@ -14,6 +14,7 @@
   max-width: 1200px;
   margin-top: 90px;
   justify-content: space-between;
+  margin-left: 135px;
 }
 
 .plant-profile-left {
@@ -286,6 +287,20 @@
   color: #000000;
 }
 
+.watering-button:disabled {
+  background-color: #95a5a6 !important;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.watering-button:disabled:hover {
+  background-color: #95a5a6;
+}
+
+.watering-button:disabled:hover .button-icon {
+  transform: none !important;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .plant-profile-content {
@@ -358,6 +373,9 @@
     width: 100%;
     max-width: 280px;
   }
+  .plant-profile-content {
+    margin-left: 0px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -402,5 +420,9 @@
 
   .toggle-icon {
     font-size: 1.2rem;
+  }
+
+  .plant-profile-content {
+    margin-left: 0px;
   }
 }

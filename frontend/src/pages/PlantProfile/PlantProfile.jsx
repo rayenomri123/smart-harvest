@@ -132,10 +132,14 @@ const PlantProfile = () => {
       </div>
 
       <div className="plant-profile-buttons">
-        <button className="watering-button" onClick={handleWater}>
-          <FaTint className="button-icon" />
-          WATERING
-        </button>
+      <button 
+        className="watering-button" 
+        onClick={handleWater}
+        disabled={currentMode === 'automatic'}
+      >
+        <FaTint className="button-icon" />
+        WATERING
+      </button>
 
         <div className="toggle-container">
           <button 
