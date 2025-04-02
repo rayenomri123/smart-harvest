@@ -1,18 +1,16 @@
-/* src/pages/PlantProfile/PlantProfile.css */
-
 .plant-profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #f8eaf7;
-  padding: 10px;
+  padding: 3px;
   min-height: 100vh;
 }
 
 .plant-profile-content {
   display: flex;
   flex-wrap: wrap;
-  width: 50%;
+  width: 90%;
   max-width: 1200px;
   margin-top: 90px;
   justify-content: space-between;
@@ -24,13 +22,15 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  min-width: 300px;
+  margin-bottom: 2rem;
 }
 
 .plant-profile-image {
   max-width: 300px;
-  width: 60%;
+  width: 100%;
   height: auto;
-  border-radius: 15px;;
+  border-radius: 15px;
 }
 
 .plant-profile-right {
@@ -38,6 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 300px;
 }
 
 .plant-status-container {
@@ -77,18 +78,22 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
+  border: 2px dashed #f8eaf7;
 }
 
 .status-label {
   margin-top: 0.5rem;
   font-weight: bold;
   color: #2c3e50;
+  display: flex;
+  align-items: center;
+  font-family: 'poppins';
 }
 
 .status-note {
   font-size: 0.85rem;
   color: #7f8c8d;
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 .plant-profile-name {
@@ -126,11 +131,12 @@
   padding: 10px;
   border-radius: 22px;
   background-color: rgb(194, 222, 174);
-  transform: translateZ(0); /* Force hardware acceleration */
-  will-change: box-shadow; /* Hint for browser optimization */
+  will-change: box-shadow;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
-/* Toggle Switch Styles */
 .toggle-container {
   position: relative;
   display: flex;
@@ -139,7 +145,6 @@
   background-color: #f0f0f0;
   border-radius: 25px;
   overflow: hidden;
-  
 }
 
 .toggle-option {
@@ -196,7 +201,6 @@
   transform: translateX(100%);
 }
 
-/* Button Styles */
 .watering-button, .delete-button {
   min-width: 170px;
   width: auto;
@@ -213,8 +217,6 @@
   align-items: center;
   gap: 10px;
   transform-style: preserve-3d;
-  
- 
 }
 
 .watering-button {
@@ -240,108 +242,165 @@
 
 .delete-button:hover {
   background-color: #cc3f2f;
-  ;
 }
 
 .delete-button:hover .button-icon {
   transform: scale(1.1) rotate(5deg);
 }
 
-/* Status Color Variations */
 .status-percentage.good {
   background-color: #6cc070;
 }
 
-.status-percentage.low {
+.status-percentage.medium {
   background-color: #f1c40f;
 }
 
-.status-percentage.critical {
+.status-percentage.low {
   background-color: #e74c3c;
 }
 
-/* Confirmation Modal Styles */
-.confirmation-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(3px);
+.status-percentage.empty {
+  background-color: #000000;
 }
 
-.confirmation-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  text-align: center;
-  max-width: 400px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-  animation: slideIn 0.3s ease-out;
-}
-
-.warning-icon {
-  font-size: 2.5rem;
-  color: #e74c3c;
-  margin-bottom: 1rem;
-  animation: pulse 1.5s infinite;
-}
-
-.confirmation-buttons {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.confirm-button, .cancel-button {
-  padding: 10px 25px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
+.status-icon {
+  font-size: 1.4rem;
+  margin-right: 10px;
   transition: all 0.3s ease;
 }
 
-.confirm-button {
-  background-color: #d24232;
-  color: white;
-  transition: all 0.5s ease;
+.status-icon.good {
+  color: #6cc070;
 }
 
-.cancel-button {
-  background: #f0f0f0;
-  color: #333;
-  transition: all 0.5s ease;
+.status-icon.medium {
+  color: #f1c40f;
 }
 
-.confirm-button:hover {
-  background-color: #b83628;
+.status-icon.low {
+  color: #e74c3c;
 }
 
-.cancel-button:hover {
-  background: #e0e0e0;
+.status-icon.empty {
+  color: #000000;
 }
 
-/* Animations */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .plant-profile-content {
+    flex-direction: column;
+    width: 95%;
+    margin-top: 70px;
   }
-  to {
-    transform: translateY(0);
-    opacity: 1;
+
+  .plant-profile-left {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .plant-profile-image {
+    max-width: 250px;
+  }
+
+  .plant-profile-right {
+    width: 100%;
+  }
+
+  .plant-status-item {
+    margin-bottom: 0.8rem;
+  }
+
+  .P2 {
+    margin-left: 20px;
+  }
+
+  .status-percentage {
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
+  }
+
+  .status-label {
+    font-size: 0.95rem;
+  }
+
+  .status-note {
+    font-size: 0.8rem;
+  }
+
+  .plant-profile-name {
+    font-size: 1.1rem;
+  }
+
+  .plant-profile-mode {
+    font-size: 1.1rem;
+  }
+
+  .plant-profile-date {
+    font-size: 1rem;
+  }
+
+  .plant-profile-buttons {
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    padding: 15px;
+    margin-top: 30px;
+  }
+
+  .toggle-container {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .watering-button, .delete-button {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .plant-profile-content {
+    margin-top: 60px;
+  }
+
+  .plant-profile-image {
+    max-width: 200px;
+  }
+
+  .status-percentage {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+
+  .status-label {
+    font-size: 0.9rem;
+  }
+
+  .status-note {
+    font-size: 0.75rem;
+  }
+
+  .plant-profile-name {
+    font-size: 1rem;
+  }
+
+  .plant-profile-mode {
+    font-size: 1rem;
+  }
+
+  .plant-profile-date {
+    font-size: 0.9rem;
+  }
+
+  .toggle-option {
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  .toggle-icon {
+    font-size: 1.2rem;
   }
 }
