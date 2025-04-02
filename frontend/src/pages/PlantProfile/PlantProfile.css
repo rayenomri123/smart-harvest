@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   background-color: #f8eaf7;
-  padding: 20px;
+  padding: 0;
   min-height: 100vh;
 }
 
@@ -24,14 +24,14 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  
 }
 
 .plant-profile-image {
   max-width: 300px;
-  width: 45%;
+  width: 60%;
   height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-top: 16px;
 }
 
 .plant-profile-right {
@@ -52,11 +52,7 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin-bottom: 1rem;
-  background: rgba(255,255,255,0.9);
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 10px 0;
 }
 
 .P1 {
@@ -242,19 +238,4 @@
 
 .status-percentage.critical {
   background-color: #e74c3c;
-}
-
-.status-icon.good::before {
-  content: '✔ ';
-  color: #2ecc71;
-}
-
-.status-icon.low::before {
-  content: '⚠ ';
-  color: #f1c40f;
-}
-
-.status-icon.critical::before {
-  content: '✖ ';
-  color: #e74c3c;
 }
