@@ -77,7 +77,9 @@ const getPlantInfo = async (req, res) => {
 
 const deletePlant = async (req, res) => {
     try {
-        const [rows] = await pool.query('DELETE FROM Plant WHERE id_plant = ?', [req.params.id]);
+        const {id_plant} = req.body;
+        const [row] = await pool.query('DELETE FROM Pin WHERE id_pin in (select id_pin from Pin_Plant where id_plant = ?)', [id_plant]);
+        const [rows] = await pool.query('DELETE FROM Plant WHERE id_plant = ?', [id_plant]);
         res.status(200).json(rows);
     } catch (error) {
         console.error(error);
@@ -85,4 +87,20 @@ const deletePlant = async (req, res) => {
     }
 };
 
-module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant,getAllSensors,getSensorsById};
+const changeModeById = async (req, res) => {
+    try {
+        const {id_plant, mode, p} = req.body;
+        const [rows] = await pool.query('select mode from Plant WHERE id_plant = ?', [id_plant]);
+        if (p==1){
+            await pool.query('UPDATE Plant SET mode = ? WHERE id_plant = ?', [mode, id_plant]);
+        }
+        if (rows.length > 0) {
+            res.status(200).json(rows[0].mode);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+};
+
+module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant,getAllSensors,getSensorsById,changeModeById};
