@@ -116,12 +116,18 @@
 }
 
 .plant-profile-buttons {
-  margin-top: 70px;
+  margin-top: 50px;
   display: flex;
   flex-direction: row;
   gap: 30px;
   align-items: center;
   position: relative;
+  border: 2px dashed rgba(44, 84, 50, 0.7);
+  padding: 10px;
+  border-radius: 22px;
+  background-color: rgb(194, 222, 174);
+  transform: translateZ(0); /* Force hardware acceleration */
+  will-change: box-shadow; /* Hint for browser optimization */
 }
 
 /* Toggle Switch Styles */
@@ -133,7 +139,7 @@
   background-color: #f0f0f0;
   border-radius: 25px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
 }
 
 .toggle-option {
@@ -207,9 +213,8 @@
   align-items: center;
   gap: 10px;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  position: relative; /* Ensure proper shadow rendering */
-  transform: translateZ(0); /* Force hardware acceleration */
+  
+ 
 }
 
 .watering-button {
@@ -304,7 +309,7 @@
 }
 
 .confirm-button {
-  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  background-color: #d24232;
   color: white;
   transition: all 0.5s ease;
 }
@@ -316,7 +321,7 @@
 }
 
 .confirm-button:hover {
-  background: linear-gradient(145deg, #9b2a1d, #c0392b);
+  background-color: #b83628;
 }
 
 .cancel-button:hover {
