@@ -149,11 +149,11 @@ const PlantProfile = () => {
       <div className="plant-profile-content">
         <div className="plant-profile-left">
           <img
-            src={plant.imageUrl || '/placeholder-plant.jpg'}
+            src={plant.url || '/placeholder-plant.jpg'}
             alt={plant.plantName}
             className="plant-profile-image"
           />
-          <h2 className="plant-profile-name">{plant.plantName}</h2>
+          <h2 className="plant-profile-name">{plant.nom}</h2>
         </div>
 
         <div className="plant-profile-right">
@@ -199,4 +199,4 @@ const PlantProfile = () => {
   );
 };
 
-export default PlantProfile;
+export default PlantProfile; 

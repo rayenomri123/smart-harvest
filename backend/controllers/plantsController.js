@@ -34,8 +34,8 @@ const getAllPlants = async (req, res) => {
 
 const createPlant = async (req, res) => {
     try {
-        const {nom,mode,date} = req.body;
-        const [rows] = await pool.query('INSERT INTO Plant (nom,mode,date) VALUES (?,?,?)', [nom,mode,date]);
+        const {nom,mode,date, url} = req.body;
+        const [rows] = await pool.query('INSERT INTO Plant (nom,mode,date,url) VALUES (?,?,?,?)', [nom,mode,date,url]);
         res.status(201).json(rows);
     } catch (error) {
         console.error(error);

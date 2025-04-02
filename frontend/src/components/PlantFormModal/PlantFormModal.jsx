@@ -97,7 +97,8 @@ const PlantFormModal = ({ onClose, onSubmit, selectedImage }) => {
         body: JSON.stringify({
           nom: plantData.name,
           mode: plantData.mode,
-          date:Date.now() 
+          date:Date.now(),
+          url: selectedImage
         }),
       });
 

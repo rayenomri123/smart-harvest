@@ -113,6 +113,8 @@ body.modal-open {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     padding: 35px;
   }
-  
+  .add-button {
+    margin: 20px;
+  }
   
 }

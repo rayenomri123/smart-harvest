@@ -1,7 +1,7 @@
 import React from 'react';
 import './PlantCard.css';
 
-const PlantCard = ({ plantName, imageUrl, date, mode, id }) => {
+const PlantCard = ({ plantName, imageUrl, date, mode, id}) => {
   function convertirMsEnDate(chaineMs) {
     const ms = parseInt(chaineMs, 10); // Conversion en nombre
     const date = new Date(ms); // Création de l'objet Date
@@ -12,10 +12,6 @@ const PlantCard = ({ plantName, imageUrl, date, mode, id }) => {
 
     return `${annee}/${mois}/${jour}`;
 }
-  const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-GB', options);
-  };
 
   return (
     <div className="plant-card-container">

@@ -97,7 +97,7 @@ const Dashboard = () => {
 
               <PlantCard 
                 plantName={plant.nom}
-                imageUrl='../src/assets/plant1.png'
+                imageUrl={plant.url}
                 mode={plant.mode}
                 id={plant.id_plant}
                 date={plant.date}
