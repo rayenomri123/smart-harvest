@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   background-color: #f8eaf7;
-  padding: 0;
+  padding: 10px;
   min-height: 100vh;
 }
 
@@ -24,14 +24,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  
 }
 
 .plant-profile-image {
   max-width: 300px;
   width: 60%;
   height: auto;
-  margin-top: 16px;
+  border-radius: 15px;;
 }
 
 .plant-profile-right {
@@ -52,7 +51,9 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 10px 0;
+  margin-bottom: 1rem;
+  padding: 0px;
+  border-radius: 12px;
 }
 
 .P1 {
@@ -69,7 +70,6 @@
   font-size: 1.3rem;
   font-weight: bold;
   color: #fff;
-  background-color: #6cc070;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -121,6 +121,7 @@
   flex-direction: row;
   gap: 30px;
   align-items: center;
+  position: relative;
 }
 
 /* Toggle Switch Styles */
@@ -190,41 +191,55 @@
 }
 
 /* Button Styles */
-.watering-button {
+.watering-button, .delete-button {
+  min-width: 170px;
+  width: auto;
+  justify-content: center;
   padding: 12px 25px;
   border: none;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  border-radius: 8px;
-  background: linear-gradient(145deg, #3498db, #2980b9);
+  border-radius: 22px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  position: relative; /* Ensure proper shadow rendering */
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
-.watering-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+.watering-button {
+  background-color: #3498db;
 }
 
 .delete-button {
-  padding: 12px 25px;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 8px;
-  background: linear-gradient(145deg, #e74c3c, #c0392b);
-  transition: all 0.3s ease;
+  background-color: #dd4938;
+}
+
+.button-icon {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.watering-button:hover {
+  background-color:#257cb6;
+}
+
+.watering-button:hover .button-icon {
+  transform: translateY(-2px) rotate(15deg);
 }
 
 .delete-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+  background-color: #cc3f2f;
+  ;
+}
+
+.delete-button:hover .button-icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 /* Status Color Variations */
@@ -238,4 +253,90 @@
 
 .status-percentage.critical {
   background-color: #e74c3c;
+}
+
+/* Confirmation Modal Styles */
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.confirmation-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  animation: slideIn 0.3s ease-out;
+}
+
+.warning-icon {
+  font-size: 2.5rem;
+  color: #e74c3c;
+  margin-bottom: 1rem;
+  animation: pulse 1.5s infinite;
+}
+
+.confirmation-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirm-button, .cancel-button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-button {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  color: white;
+  transition: all 0.5s ease;
+}
+
+.cancel-button {
+  background: #f0f0f0;
+  color: #333;
+  transition: all 0.5s ease;
+}
+
+.confirm-button:hover {
+  background: linear-gradient(145deg, #9b2a1d, #c0392b);
+}
+
+.cancel-button:hover {
+  background: #e0e0e0;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
