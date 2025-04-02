@@ -6,6 +6,8 @@ import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
 import {getLuminosity,controlRelay,getSensorsById,getSoilHumidity,getTempHumidity  } from '../../services/deteService';
 import {deletePlant,changeMode} from '../../services/plantService';
+import { GiPlantWatering, GiAutoRepair } from "react-icons/gi";
+
 
 const PlantProfile = () => {
   const location = useLocation();
@@ -14,7 +16,19 @@ const PlantProfile = () => {
   const chemin = window.location.pathname; // "/utilisateur/123"
   const id_p = chemin.split('/')[1];
   // const [statuses, setStatuses] = useState([]);
+  const [currentMode, setCurrentMode] = useState(plant?.mode || 'automatic');
 
+
+  function convertirMsEnDate(chaineMs) {
+    const ms = parseInt(chaineMs, 10); // Conversion en nombre
+    const date = new Date(ms); // Création de l'objet Date
+
+    const annee = date.getUTCFullYear();
+    const mois = String(date.getUTCMonth() + 1).padStart(2, '0'); // Mois de 01 à 12
+    const jour = String(date.getUTCDate()).padStart(2, '0'); // Jour sur 2 chiffres
+
+    return `${annee}/${mois}/${jour}`;
+}
   const getSensorData = async (sensorId,type=1) => {
     try {
       switch(sensorId) {
@@ -137,19 +151,17 @@ const PlantProfile = () => {
   if (!plant) {
     return <div className='dashboard-container'><DashboardSlider /><p>Please select a plant.</p></div>;
   }
-  changeMode(id_p).then(result => {
-    document.getElementById("mode").innerHTML=result
-  });
-  const handleAutomatic = () => {
-    changeMode(id_p).then(result => {
-      if(result=='automatic') {
-        changeMode(id_p,'manual',1);
-      }else{
-        changeMode(id_p,'automatic',1);
-      }
-      document.getElementById("mode").innerHTML='manual'===result?'automatic':'manual';
-    });
-  }
+
+  const handleAutomatic = (newMode) => {
+    if (currentMode === newMode) return;
+    changeMode(id_p, newMode, 1)
+      .then(() => {
+        setCurrentMode(newMode);
+      })
+      .catch(error => {
+        console.error('Error changing mode:', error);
+      });
+  };  
 
   const handleWater = (value) => {
     try {
@@ -176,6 +188,8 @@ const PlantProfile = () => {
             className="plant-profile-image"
           />
           <h2 className="plant-profile-name">{plant.nom}</h2>
+          <h2 className="plant-profile-mode">{plant.mode}</h2>
+          <h2 className="plant-profile-date">{convertirMsEnDate(plant.date)}</h2>
         </div>
 
         <div className="plant-profile-right">
@@ -209,12 +223,27 @@ const PlantProfile = () => {
       
 
       <div className="plant-profile-buttons">
-        {/* verifier si il y a pompe a eau dans base de donner avant afiffichage bouton */}
-        <button className="watering-button" id="water" onClick={handleWater}>watering</button>
-        <button className="automatic-button" id="mode" onClick={handleAutomatic}>AUTOMATIC</button>
+        <button className="watering-button" onClick={() => handleWater(10)}>WATERING</button>
+        <div className="toggle-container">
+  <button 
+    className={`toggle-option ${currentMode === 'automatic' ? 'active' : ''}`}
+    onClick={() => handleAutomatic('automatic')}
+  >
+    <GiAutoRepair className="toggle-icon" />
+    AUTOMATIC
+  </button>
+  <button 
+    className={`toggle-option ${currentMode === 'manual' ? 'active' : ''}`}
+    onClick={() => handleAutomatic('manual')}
+  >
+    <GiPlantWatering className="toggle-icon" />
+    MANUAL
+  </button>
+  <div className={`toggle-slider ${currentMode}`}></div>
+</div>
         <button className="delete-button" onClick={handleDelete}>
-        DELETE
-      </button>
+          DELETE
+        </button>
       </div>
 
       

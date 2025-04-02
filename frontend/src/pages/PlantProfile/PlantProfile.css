@@ -1,144 +1,260 @@
 /* src/pages/PlantProfile/PlantProfile.css */
 
 .plant-profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f8eaf7; /* Example light greenish background */
-    padding: 20px;
-  }
-  
-  /* Main content layout */
-  .plant-profile-content {
-    display: flex;
-    flex-wrap: wrap; /* allows wrapping on small screens */
-    width: 50%;
-    max-width: 1200px;
-    margin-top: 90px;
-    justify-content: space-between;
-  }
-  
-  /* Left side: Image */
-  .plant-profile-left {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8eaf7;
+  padding: 20px;
+  min-height: 100vh;
+}
 
-  }
-  
-  .plant-profile-image {
-    max-width: 300px;
-    width:  45%;
-    height: auto;
-  }
-  
-  /* Right side: Status indicators */
-  .plant-profile-right {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.plant-profile-content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  max-width: 1200px;
+  margin-top: 90px;
+  justify-content: space-between;
+}
 
-  }
-  
-  .plant-status-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.plant-profile-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
-  }
-  
-  .plant-status-item {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-bottom: 1rem;
- 
-  }
-  .P1 {
-    display: flex;
-  }
-  .P2 {
-    display: flex;
-    flex-direction: column;
-    margin-left: 30px;
-  }
-  /* Circle with percentage */
-  .status-percentage {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #6cc070; /* Example green color */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Status labels */
-  .status-label {
-    margin-top: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .status-note {
-    font-size: 0.85rem;
-    color: #666;
-  }
-  
-  /* Plant name below content */
-  .plant-profile-name {
-    margin-top: 20px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    color: #2c5432;
-  }
-  
-  /* Manual/Automatic buttons */
-  .plant-profile-buttons {
-    margin-top: 70px;
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-  }
-  
-  .manual-button,
-  .automatic-button {
-    padding: 10px 20px;
-    background-color: #6cc070;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .manual-button:hover,
-  .automatic-button:hover {
-    background-color: #5aad5f;
-  }
-  
-  /* Delete button */
-  .delete-button {
-    padding: 10px 20px;
-    background-color: #d24f4f;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .delete-button:hover {
-    background-color: #c9302c;
-  }
-  
+.plant-profile-image {
+  max-width: 300px;
+  width: 45%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.plant-profile-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plant-status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.plant-status-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  background: rgba(255,255,255,0.9);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.P1 {
+  display: flex;
+}
+
+.P2 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+}
+
+.status-percentage {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #6cc070;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.status-label {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.status-note {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin-top: 4px;
+}
+
+.plant-profile-name {
+  margin: 20px 0 15px 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  color: #2c5432;
+}
+
+.plant-profile-mode {
+  margin: 0 0 3px 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-align: center;
+  color: #444;
+}
+
+.plant-profile-date {
+  margin: 0 0 7px 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-align: center;
+  color: #727272;
+}
+
+.plant-profile-buttons {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+/* Toggle Switch Styles */
+.toggle-container {
+  position: relative;
+  display: flex;
+  width: 280px;
+  height: 45px;
+  background-color: #f0f0f0;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toggle-option {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1;
+  color: #666;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.toggle-icon {
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.toggle-option.active {
+  color: #fff;
+}
+
+.toggle-option:not(.active) .toggle-icon {
+  color: #95a5a6;
+}
+
+.toggle-option.active .toggle-icon {
+  color: #fff;
+  transform: scale(1.15) rotate(-8deg);
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 4px);
+  height: calc(100% - 4px);
+  border-radius: 22px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-slider.automatic {
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  transform: translateX(0);
+}
+
+.toggle-slider.manual {
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  transform: translateX(100%);
+}
+
+/* Button Styles */
+.watering-button {
+  padding: 12px 25px;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #3498db, #2980b9);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.watering-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.delete-button {
+  padding: 12px 25px;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  transition: all 0.3s ease;
+}
+
+.delete-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+/* Status Color Variations */
+.status-percentage.good {
+  background-color: #6cc070;
+}
+
+.status-percentage.low {
+  background-color: #f1c40f;
+}
+
+.status-percentage.critical {
+  background-color: #e74c3c;
+}
+
+.status-icon.good::before {
+  content: '✔ ';
+  color: #2ecc71;
+}
+
+.status-icon.low::before {
+  content: '⚠ ';
+  color: #f1c40f;
+}
+
+.status-icon.critical::before {
+  content: '✖ ';
+  color: #e74c3c;
+}
