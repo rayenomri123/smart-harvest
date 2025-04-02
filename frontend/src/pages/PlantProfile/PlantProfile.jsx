@@ -150,7 +150,7 @@ const PlantProfile = () => {
 
   const handleDelete = () => {
     deletePlant(id_p);
-    navigate('/dashboard');
+    navigate('/dashboard'); 
   };
 
   return (
