@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
 import {getLuminosity,controlRelay,getSensorsById,getSoilHumidity,getTempHumidity  } from '../../services/deteService';
+import {deletePlant,changeMode} from '../../services/plantService';
 
 const PlantProfile = () => {
   const location = useLocation();
@@ -137,8 +138,18 @@ const PlantProfile = () => {
     return <div className='dashboard-container'><DashboardSlider /><p>Please select a plant.</p></div>;
   }
 
+  const handleAutomatic = () => {
+    changeMode(id_p).then(result => {
+      if(result=='automatic') {
+        changeMode(id_p,'manual',1);
+      }else{
+        changeMode(id_p,'automatic',1);
+      }
+    });
+  }
+
   const handleDelete = () => {
-    alert(`Deleting plant: ${plant.plantName}`);
+    deletePlant(id_p);
     navigate('/dashboard');
   };
 
@@ -187,8 +198,7 @@ const PlantProfile = () => {
       
 
       <div className="plant-profile-buttons">
-        <button className="manual-button">MANUAL</button>
-        <button className="automatic-button">AUTOMATIC</button>
+        <button className="automatic-button" onClick={handleAutomatic}>AUTOMATIC</button>
         <button className="delete-button" onClick={handleDelete}>
         DELETE
       </button>

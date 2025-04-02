@@ -13,6 +13,8 @@ router.post('/create',verifyRoles(roles_list.admin), plantsController.createPlan
 router.post('/:id/addSensor',verifyRoles(roles_list.admin), plantsController.addSensor);
 router.post('/:id/deleteSensor',verifyRoles(roles_list.admin), plantsController.deleteSensor);
 router.get('/:id', plantsController.getPlantInfo);
-router.delete('/:id/delete',verifyRoles(roles_list.admin), plantsController.deletePlant);
+router.delete('/delete',verifyRoles(roles_list.admin), plantsController.deletePlant);
+router.post('/change_mode', plantsController.changeModeById);
+
 
 module.exports = router;

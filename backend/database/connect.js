@@ -56,12 +56,12 @@ async function initializeDatabase() {
         await pool.execute(data.createValueTable);
 
         // Ajout de l'utilisateur admin
-        const password = await bcrypt.hash("admin", 10);
-        const [result] = await pool.execute(`INSERT INTO Compte (adresse_email, mot_de_passe, numero_tel, nom, prenom) VALUES ('admin', '${password}', 'admin', 'admin', 'admin');`);
-        await pool.execute("INSERT INTO Compte_Admin (id_compte) VALUES (?);", [result.insertId]);
+        // const password = await bcrypt.hash("admin", 10);
+        // const [result] = await pool.execute(`INSERT INTO Compte (adresse_email, mot_de_passe, numero_tel, nom, prenom) VALUES ('admin', '${password}', 'admin', 'admin', 'admin');`);
+        // await pool.execute("INSERT INTO Compte_Admin (id_compte) VALUES (?);", [result.insertId]);
 
         // Ajout des capteurs
-        await pool.execute(`INSERT INTO SensorType (nom) VALUES ('humidite sol'), ('humidite air'), ('luminosite'), ('pompe a eau'), ('ultra son');`);
+        // await pool.execute(`INSERT INTO SensorType (nom) VALUES ('humidite sol'), ('humidite air'), ('luminosite'), ('pompe a eau'), ('ultra son');`);
 
         console.log('Base de données initialisée avec succès.');
     } catch (error) {
