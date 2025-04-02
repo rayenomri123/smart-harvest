@@ -137,7 +137,9 @@ const PlantProfile = () => {
   if (!plant) {
     return <div className='dashboard-container'><DashboardSlider /><p>Please select a plant.</p></div>;
   }
-
+  changeMode(id_p).then(result => {
+    document.getElementById("mode").innerHTML=result
+  });
   const handleAutomatic = () => {
     changeMode(id_p).then(result => {
       if(result=='automatic') {
@@ -145,7 +147,16 @@ const PlantProfile = () => {
       }else{
         changeMode(id_p,'automatic',1);
       }
+      document.getElementById("mode").innerHTML='manual'===result?'automatic':'manual';
     });
+  }
+
+  const handleWater = (value) => {
+    try {
+      controlRelay(id_p,value*1000).then(result => console.log(result));//change value*1000 with value/(ml/second)*1000
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleDelete = () => {
@@ -198,7 +209,9 @@ const PlantProfile = () => {
       
 
       <div className="plant-profile-buttons">
-        <button className="automatic-button" onClick={handleAutomatic}>AUTOMATIC</button>
+        {/* verifier si il y a pompe a eau dans base de donner avant afiffichage bouton */}
+        <button className="watering-button" id="water" onClick={handleWater}>watering</button>
+        <button className="automatic-button" id="mode" onClick={handleAutomatic}>AUTOMATIC</button>
         <button className="delete-button" onClick={handleDelete}>
         DELETE
       </button>
