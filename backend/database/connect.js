@@ -13,31 +13,7 @@ const pool = mysql.createPool({
     queueLimit: 0,
 });
 
-// Affichage de la table
-async function displayTables(pool) {
-    try {
-        const [tables] = await pool.execute('SHOW TABLES');
-        console.log('\nListe des tables :');
-        tables.forEach(table => {
-            console.log(`- ${Object.values(table)[0]}`);
-        });
 
-        for (const table of tables) {
-            const tableName = Object.values(table)[0];
-            const [columns] = await pool.execute(`DESCRIBE ${tableName}`);
-            console.log(`\nStructure de la table "${tableName}":`);
-            columns.forEach(column => {
-                console.log(
-                    `  - ${column.Field}: ${column.Type} | Clé primaire: ${
-                        column.Key === 'PRI' ? 'Oui' : 'Non'
-                    } | Null: ${column.Null === 'YES' ? 'Autorisé' : 'Non autorisé'}`
-                );
-            });
-        }
-    } catch (error) {
-        console.error("Erreur lors de l'affichage des tables :", error.message);
-    }
-}
 
 // Création des bases de données
 async function initializeDatabase() {
