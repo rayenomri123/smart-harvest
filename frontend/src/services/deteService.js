@@ -1,5 +1,5 @@
 // detectorsClient.js
-const BASE_URL = 'http://192.168.1.16:8000/api'; // URL de votre serveur FastAPI
+const BASE_URL = 'http://192.168.1.17:8000/api'; // URL de votre serveur FastAPI
 
 // Fonction générique pour gérer les requêtes fetch
 async function fetchFromApi(endpoint,plant_id, options = {}) {

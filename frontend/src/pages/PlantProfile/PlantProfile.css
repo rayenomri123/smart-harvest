@@ -220,6 +220,84 @@
   transform-style: preserve-3d;
 }
 
+/* CSS TANK START */
+
+.tank-indicator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.tank-icon-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.tank-icon {
+  font-size: 2.3rem;
+  min-width: 40px;
+}
+
+.tank-indicator.horizontal {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 4px 20px;
+  background-color: #ffffff;
+  border-radius: 22px;
+}
+
+.tank-progress-container {
+  width: 150px;
+  position: relative;
+}
+
+.tank-progress {
+  height: 35px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tank-fill {
+  height: 100%;
+  position: relative;
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.tank-percentage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  z-index: 2;
+  pointer-events: none;
+  /* Add empty state */
+  &.dark {
+    color: #2c3e50;
+    text-shadow: none;
+  }
+}
+
+.tank-icon.good { color: #2ecc71; }
+.tank-icon.medium { color: #f1c40f; }
+.tank-icon.low { color: #e74c3c; }
+.tank-icon.empty { color: #2c3e50; }
+
+.tank-fill.good { background-color: #2ecc71; }
+.tank-fill.medium { background-color: #f1c40f; }
+.tank-fill.low { background-color: #e74c3c; }
+.tank-fill.empty { background-color: #2c3e50; }
+
+/* CSS TANK END */
+
 .watering-button {
   background-color: #3498db;
 }
