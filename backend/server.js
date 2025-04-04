@@ -37,6 +37,7 @@ app.use('/api/logout', require('./routes/logout'));
 
 app.use(verifyJWT);
 
+app.use('/api/notif', require('./routes/notifications'));
 app.use('/api/plants', require('./routes/plants'));
 app.use('/api/user', require('./routes/user'));
 
