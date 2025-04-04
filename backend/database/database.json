@@ -10,6 +10,7 @@
     "createPinPlantTable":"CREATE TABLE IF NOT EXISTS Pin_Plant (id_pin VARCHAR(255),id_plant INT,PRIMARY KEY (id_pin,id_plant),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE,FOREIGN KEY (id_plant) REFERENCES Plant(id_plant) ON DELETE CASCADE)",
     "createValueTable":"CREATE TABLE IF NOT EXISTS Val (date INT,id_pin VARCHAR(255),valeur FLOAT,PRIMARY KEY (date,id_pin),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE)",
 
+    "createNotifTable":"CREATE TABLE IF NOT EXISTS Notif (id_notif INT AUTO_INCREMENT PRIMARY KEY,id_plant INT,type VARCHAR(255),title VARCHAR(255),time VARCHAR(255),contenu VARCHAR(255),FOREIGN KEY (id_plant) REFERENCES Plant(id_plant) ON DELETE CASCADE)",
 
     "deleteUserTables":"DROP TABLE IF EXISTS Compte_Client, Compte_Admin, Compte,refresh_tokens",
     "deletePlantTable":"DROP TABLE IF EXISTS Pin_Plant, Val, Pin, Plant"
