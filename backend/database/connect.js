@@ -30,6 +30,7 @@ async function initializeDatabase() {
         await pool.execute(data.createPinTable);
         await pool.execute(data.createPinPlantTable);
         await pool.execute(data.createValueTable);
+        await pool.execute(data.createNotifTable);
 
         // Ajout de l'utilisateur admin
         // const password = await bcrypt.hash("admin", 10);
