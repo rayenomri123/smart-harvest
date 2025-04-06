@@ -59,8 +59,8 @@ export async function getLuminosity(plant_id) {
     });
 }
 
-export async function getDistance(plant_id) {
-    return await fetchFromApi('/distance',plant_id, {
+export async function getDistance() {
+    return await fetchFromApi('/distance',0, {
         method: 'GET'
     });
 }
