@@ -16,17 +16,21 @@ import { deletePlant, changeMode } from '../../services/plantService';
 import { getLuminosity, controlRelay, getSensorsById, getSoilHumidity, getTempHumidity, getDistance } from '../../services/deteService';
 
 const PlantProfile = () => {
+
   const location = useLocation();
   const navigate = useNavigate();
-  const { plant } = location.state || {};
+  const storedPlantString = localStorage.getItem('selectedPlant');
+  const storedPlant = storedPlantString ? JSON.parse(storedPlantString) : null;
+  const plant = location.state?.plant || storedPlant;
+
   const chemin = window.location.pathname;
   const id_p = chemin.split('/')[1];
-
   const [currentMode, setCurrentMode] = useState(plant?.mode || 'automatic');
   const [tankLevel, setTankLevel] = useState(0);
   const [pumpWorking, setPumpWorking] = useState(false);
   const [statuses, setStatuses] = useState([]);
-
+  console.log(storedPlant)
+  console.log(plant)
   const getTankStatus = (level) => {
     if (level === 0) return 'empty';
     if (level > 0 && level <= 25) return 'low';

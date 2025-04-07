@@ -83,6 +83,7 @@ const Dashboard = () => {
 
   // New click handler to navigate with plant data
   const handlePlantClick = (plant) => {
+    localStorage.setItem('selectedPlant', JSON.stringify(plant));
     navigate(`/${plant.id_plant}/plant-profile`, { state: { plant } });
   };
 
