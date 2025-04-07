@@ -127,7 +127,7 @@ const SignUp = () => {
     <div className="signin-container">
       <br /><br /><br /><br />
       <div className="auth-header">
-        <h1>Sign up for free</h1>
+        <h1>Sign up to add user</h1>
         <p className="auth-subheader">
           Or{' '}
           <a href="/signin" className="signup-link">

@@ -71,40 +71,43 @@ const DashboardSlider = () => {
             </div>
 
             <nav className="dash-slider__nav">
-  <NavLink 
-    to="/dashboard" 
-    end
-    className={({ isActive }) => 
-      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
-    }
-  >
-    <span className="dash-slider__nav-icon"><MdDashboard /></span>
-    <span>Dashboard</span>
-  </NavLink>
-  
-  <NavLink 
-    to={`/${storedPlant.id_plant}/plant-profile`} 
-    end
-    className={({ isActive }) => 
-      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
-    }
-  >
-    <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
-    <span>Plant Profile</span>
-  </NavLink>
-  
-  <NavLink 
-    to="/notifications" 
-    end
-    className={({ isActive }) => 
-      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
-    }
-  >
-    <span className="dash-slider__nav-icon"><FiBell /></span>
-    <span>Notifications</span>
-    <span className="dash-slider__badge">3</span>
-  </NavLink>
-</nav>
+              <NavLink 
+                to="/dashboard" 
+                end
+                className={({ isActive }) => 
+                  `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+                }
+                style={{ fontWeight: 'inherit' }}
+              >
+                <span className="dash-slider__nav-icon"><MdDashboard /></span>
+                <span>Dashboard</span>
+              </NavLink>
+              
+              <NavLink 
+                to={`/${storedPlant.id_plant}/plant-profile`} 
+                end
+                className={({ isActive }) => 
+                  `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+                }
+                style={{ fontWeight: 'inherit' }}
+              >
+                <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
+                <span>Plant Profile</span>
+              </NavLink>
+              
+              <NavLink 
+                to="/notifications" 
+                end
+                className={({ isActive }) => 
+                  `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+                }
+                style={{ fontWeight: 'inherit' }}
+              >
+                <span className="dash-slider__nav-icon"><FiBell /></span>
+                <span>Notifications</span>
+                <span className="dash-slider__badge">3</span>
+              </NavLink>
+            </nav>
 
             <div className="dash-slider__footer">
               <div className="dash-slider__nav-item dash-slider__logout" onClick={handleLogout}>

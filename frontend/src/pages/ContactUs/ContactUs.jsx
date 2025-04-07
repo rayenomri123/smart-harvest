@@ -14,7 +14,7 @@ const ContactUs = () => {
         <div className="contact-content">
           <form className="contact-form">
             <div className="form-group">
-              <label htmlFor="name">Your Name</label>
+              <label htmlFor="name" className='formLabel'>Your Name</label>
               <input
                 type="text"
                 id="name"
@@ -24,7 +24,7 @@ const ContactUs = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="email" className='formLabel'>Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -34,7 +34,7 @@ const ContactUs = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="message">Message</label>
+              <label htmlFor="message" className='formLabel'>Message</label>
               <textarea
                 id="message"
                 placeholder="Type your message here..."

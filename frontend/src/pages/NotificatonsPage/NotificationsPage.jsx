@@ -61,23 +61,23 @@ const NotificationsPage = () => {
   };
 
   return (
-    <div className="notif-page__container">
+    <div className="notifications-page-container">
       <DashboardSlider />
-      <main className="notif-page__main">
-        <div className="notif-page__content">
-          <header className="notif-page__header">
-            <h1 className="notif-page__title">Plant Alerts</h1>
-            <span className="notif-page__count">
+      <main className="notifications-page-main">
+        <div className="notifications-page-content">
+          <header className="notifications-page-header">
+            <h1 className="notifications-page-title">Plant Alerts</h1>
+            <span className="notifications-page-alert-count">
               {notifications.length} active alerts
             </span>
           </header>
           
-          <section className="notif-page__list">
+          <section className="notifications-page-list">
             {notifications.length === 0 ? (
-              <div className="notif-page__empty">
-                <div className="notif-page__empty-icon">🌿</div>
-                <p className="notif-page__empty-text">All plants are happy!</p>
-                <p className="notif-page__empty-sub">No active alerts</p>
+              <div className="notifications-page-empty-state">
+                <div className="notifications-page-empty-icon">🌿</div>
+                <p className="notifications-page-empty-text">All plants are happy!</p>
+                <p className="notifications-page-empty-subtext">No active alerts</p>
               </div>
             ) : (
               notifications.map(notification => (

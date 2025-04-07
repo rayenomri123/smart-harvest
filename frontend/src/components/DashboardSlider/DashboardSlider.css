@@ -10,6 +10,13 @@
   transition: width 0.3s ease;
   z-index: 1000;
   overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.dash-slider * {
+  font-weight: inherit;
+  font-family: inherit;
 }
 
 /* Open/Closed States (Desktop) */
@@ -58,11 +65,13 @@
 .dash-slider__profile-info h3 {
   margin: 0;
   font-size: 16px;
+  font-weight: 600;
 }
 
 .dash-slider__status {
   font-size: 12px;
   opacity: 0.8;
+  font-weight: 400;
 }
 
 /* Navigation */
@@ -82,6 +91,7 @@
   position: relative;
   text-decoration: none;
   color: inherit;
+  font-weight: 500;
 }
 
 .dash-slider__nav-item:hover {
@@ -90,7 +100,7 @@
 
 .dash-slider__nav-item--active {
   background-color: rgba(255, 255, 255, 0.2);
-  position: relative;
+  font-weight: 600 !important;
 }
 
 .dash-slider__nav-item--active::before {
@@ -145,10 +155,9 @@
   z-index: 1001;
 }
 
-.dash-slider__toggle:hover{
+.dash-slider__toggle:hover {
   background-color: #1f4124;
 }
-
 
 /* Positioning for Toggle Button (Desktop) */
 .dash-slider__toggle {
@@ -180,7 +189,6 @@
 
 /* Responsive Adjustments for Mobile Devices */
 @media (max-width: 768px) {
-  /* When open, slider takes 80% of viewport width */
   .dash-slider--open {
     width: 70%;
   }
@@ -190,7 +198,6 @@
     padding: 15px;
   }
   
-  /* Toggle button adjusts based on slider width */
   .dash-slider__toggle {
     left: 70%;
   }
