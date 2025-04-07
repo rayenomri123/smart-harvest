@@ -11,7 +11,15 @@ import './DashboardSlider.css';
 import { logout } from '../../services/authService';
 
 const DashboardSlider = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(() => {
+    const savedState = localStorage.getItem('dashboardSliderState');
+    return savedState !== null ? JSON.parse(savedState) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('dashboardSliderState', JSON.stringify(isOpen));
+  }, [isOpen]);
+  
   const sliderRef = useRef(null);
   const userName = "Rayen";
 
@@ -60,22 +68,40 @@ const DashboardSlider = () => {
             </div>
 
             <nav className="dash-slider__nav">
-              <NavLink to="/dashboard" className="dash-slider__nav-item">
-                <span className="dash-slider__nav-icon"><MdDashboard /></span>
-                <span>Dashboard</span>
-              </NavLink>
-              
-              <NavLink to="/plant-profile" className="dash-slider__nav-item">
-                <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
-                <span>Plant Profile</span>
-              </NavLink>
-              
-              <NavLink to="/notifications" className="dash-slider__nav-item">
-                <span className="dash-slider__nav-icon"><FiBell /></span>
-                <span>Notifications</span>
-                <span className="dash-slider__badge">3</span>
-              </NavLink>
-            </nav>
+  <NavLink 
+    to="/dashboard" 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+    <span className="dash-slider__nav-icon"><MdDashboard /></span>
+    <span>Dashboard</span>
+  </NavLink>
+  
+  <NavLink 
+    to="/plant-profile" 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+    <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
+    <span>Plant Profile</span>
+  </NavLink>
+  
+  <NavLink 
+    to="/notifications" 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+    <span className="dash-slider__nav-icon"><FiBell /></span>
+    <span>Notifications</span>
+    <span className="dash-slider__badge">3</span>
+  </NavLink>
+</nav>
 
             <div className="dash-slider__footer">
               <div className="dash-slider__nav-item dash-slider__logout" onClick={handleLogout}>

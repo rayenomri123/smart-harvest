@@ -8,7 +8,7 @@
     "createSensorTypeTable":"CREATE TABLE IF NOT EXISTS SensorType (id_sensor_type INT AUTO_INCREMENT PRIMARY KEY,nom VARCHAR(255))",
     "createPinTable":"CREATE TABLE IF NOT EXISTS Pin (id_pin VARCHAR(255) PRIMARY KEY,id_sensor_type INT,FOREIGN KEY (id_sensor_type) REFERENCES SensorType(id_sensor_type) ON DELETE CASCADE)",
     "createPinPlantTable":"CREATE TABLE IF NOT EXISTS Pin_Plant (id_pin VARCHAR(255),id_plant INT,PRIMARY KEY (id_pin,id_plant),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE,FOREIGN KEY (id_plant) REFERENCES Plant(id_plant) ON DELETE CASCADE)",
-    "createValueTable":"CREATE TABLE IF NOT EXISTS Val (date INT,id_pin VARCHAR(255),valeur FLOAT,PRIMARY KEY (date,id_pin),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE)",
+    "createValueTable":"CREATE TABLE IF NOT EXISTS Val (date VARCHAR(255),id_pin VARCHAR(255),valeur varchar(255),PRIMARY KEY (date,id_pin),FOREIGN KEY (id_pin) REFERENCES Pin(id_pin) ON DELETE CASCADE)",
 
     "createNotifTable":"CREATE TABLE IF NOT EXISTS Notif (id_notif INT AUTO_INCREMENT PRIMARY KEY,id_plant INT,type VARCHAR(255),title VARCHAR(255),time VARCHAR(255),contenu VARCHAR(255),FOREIGN KEY (id_plant) REFERENCES Plant(id_plant) ON DELETE CASCADE)",
 
