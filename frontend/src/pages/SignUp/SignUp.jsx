@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import { FaGithub, FaFacebook } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import '../SignIn/SignIn.css';
 
 async function createClientAccount(nom, prenom, tel, email, password) {
@@ -10,7 +10,7 @@ async function createClientAccount(nom, prenom, tel, email, password) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("token")}` // Token JWT pour verifyRoles
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
       },
       credentials: 'include',
       body: JSON.stringify({
@@ -107,7 +107,6 @@ const SignUp = () => {
     setIsSubmitting(true);
     
     try {
-      // Using username for both nom and prenom as in your original code
       const compte = await createClientAccount(
         formData.username,
         formData.username,
@@ -115,20 +114,7 @@ const SignUp = () => {
         formData.email,
         formData.password
       );
-      console.log('Compte créé:', compte);
-      
-      // Navigate to /dashboard after successful registration
       navigate('/dashboard');
-      
-      // Optionally, reset the form here if needed:
-      // setFormData({
-      //   username: '',
-      //   email: '',
-      //   phone: '',
-      //   password: '',
-      //   confirmPassword: '',
-      //   agreeTerms: false
-      // });
     } catch (error) {
       console.error('Registration error:', error);
       alert('Registration failed. Please try again.');
@@ -139,116 +125,115 @@ const SignUp = () => {
 
   return (
     <div className="signin-container">
+      <br /><br /><br /><br />
+      <div className="auth-header">
+        <h1>Sign up for free</h1>
+        <p className="auth-subheader">
+          Or{' '}
+          <a href="/signin" className="signup-link">
+            sign in to your existing account
+          </a>
+        </p>
+      </div>
+
       <div className="signin-card">
-        <div className="signin-header">
-          <h2>Sign up for free</h2>
-          <p>
-            Or{' '}
-            <a href="/signin" className="signup-link">
-              sign in to your existing account
-            </a>
-          </p>
-        </div>
-
         <form onSubmit={handleSubmit} className="signin-form" noValidate>
-          <div className="form-content">
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                className={errors.username ? 'error' : ''}
-              />
-              {errors.username && <span className="error-message">{errors.username}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className={errors.email ? 'error' : ''}
-              />
-              {errors.email && <span className="error-message">{errors.email}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className={errors.phone ? 'error' : ''}
-              />
-              {errors.phone && <span className="error-message">{errors.phone}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className={errors.password ? 'error' : ''}
-              />
-              {errors.password && <span className="error-message">{errors.password}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Password confirmation</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                className={errors.confirmPassword ? 'error' : ''}
-              />
-              {errors.confirmPassword && (
-                <span className="error-message">{errors.confirmPassword}</span>
-              )}
-            </div>
-
-            <div className="form-options">
-              <label className="remember-me">
-                <input
-                  type="checkbox"
-                  name="agreeTerms"
-                  checked={formData.agreeTerms}
-                  onChange={handleChange}
-                  required
-                  className={errors.agreeTerms ? 'error' : ''}
-                />
-                By signing up, you agree to our terms of use.
-                {errors.agreeTerms && (
-                  <span className="error-message">{errors.agreeTerms}</span>
-                )}
-              </label>
-            </div>
-
-            <button 
-              type="submit" 
-              className="signin-button" 
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Signing up...' : 'Sign up'}
-            </button>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className={errors.username ? 'error' : ''}
+            />
+            {errors.username && <span className="error-message">{errors.username}</span>}
           </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className={errors.email ? 'error' : ''}
+            />
+            {errors.email && <span className="error-message">{errors.email}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className={errors.phone ? 'error' : ''}
+            />
+            {errors.phone && <span className="error-message">{errors.phone}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className={errors.password ? 'error' : ''}
+            />
+            {errors.password && <span className="error-message">{errors.password}</span>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className={errors.confirmPassword ? 'error' : ''}
+            />
+            {errors.confirmPassword && (
+              <span className="error-message">{errors.confirmPassword}</span>
+            )}
+          </div>
+
+          <div className="form-options">
+            <label className="remember-me">
+              <input
+                type="checkbox"
+                name="agreeTerms"
+                checked={formData.agreeTerms}
+                onChange={handleChange}
+                required
+                className={errors.agreeTerms ? 'error' : ''}
+              />
+              I agree to the terms and conditions
+              {errors.agreeTerms && (
+                <span className="error-message">{errors.agreeTerms}</span>
+              )}
+            </label>
+          </div>
+
+          <button 
+            type="submit" 
+            className="signin-button" 
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Signing up...' : 'Sign up'}
+          </button>
         </form>
 
         <div className="social-auth">
@@ -265,13 +250,10 @@ const SignUp = () => {
               <FaGithub className="social-icon" />
               GitHub
             </button>
-            <button type="button" className="social-button facebook">
-              <FaFacebook className="social-icon" />
-              Facebook
-            </button>
           </div>
         </div>
       </div>
+      <br /><br /><br />
     </div>
   );
 };
