@@ -131,7 +131,7 @@ const PlantProfile = () => {
     if (pumpWorking) return; // Block if pump is already working
     setPumpWorking(true);
     try {
-      // Adjust the relay control value/timing as needed
+      // Adjust the relay control value/timing as needed 
       await controlRelay(id_p, 1 * 10000);
     } catch (error) {
       console.error(error);

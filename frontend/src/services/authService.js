@@ -120,3 +120,47 @@ export async function auth_test() {
     return false;
   }
 }
+
+// authService.js
+export async function getCurrentUser() {
+  try {
+    // Initial request
+    let response = await fetch("http://localhost:3500/api/users/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    });
+
+    // Handle token expiration
+    if (response.status === 403) {
+      const refreshSuccess = await refreshToken();
+      if (!refreshSuccess) {
+        await logout();
+        return null;
+      }
+      
+      // Retry with new token
+      response = await fetch("http://localhost:3500/api/users/me", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      });
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    const userData = await response.json();
+    return userData;
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+    return null;
+  }
+}

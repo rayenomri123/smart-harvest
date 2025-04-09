@@ -40,6 +40,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
+    userlastname: '',
     email: '',
     phone: '',
     password: '',
@@ -107,9 +108,10 @@ const SignUp = () => {
     setIsSubmitting(true);
     
     try {
+      // console.log(formData);
       const compte = await createClientAccount(
         formData.username,
-        formData.username,
+        formData.userlastname,
         formData.phone,
         formData.email,
         formData.password
@@ -135,10 +137,10 @@ const SignUp = () => {
           </a>
         </p>
       </div>
-
+      
       <div className="signin-card">
         <form onSubmit={handleSubmit} className="signin-form" noValidate>
-          <div className="form-group">
+        <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -151,6 +153,20 @@ const SignUp = () => {
             />
             {errors.username && <span className="error-message">{errors.username}</span>}
           </div>
+        <div className="form-group">
+            <label htmlFor="username">userlastname</label>
+            <input
+              type="text"
+              id="userlastname"
+              name="userlastname"
+              value={formData.userlastname}
+              onChange={handleChange}
+              required
+              className={errors.userlastname ? 'error' : ''}
+            />
+            {errors.userlastname && <span className="error-message">{errors.userlastname}</span>}
+          </div>
+          
 
           <div className="form-group">
             <label htmlFor="email">Email</label>

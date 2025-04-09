@@ -53,6 +53,8 @@ const SignIn = () => {
 
       const result = await response.json();
       localStorage.setItem("token", result.accessToken);
+      localStorage.setItem("user", result.foundUser.nom+" "+result.foundUser.prenom);
+      
       navigate("/dashboard");
 
     } catch (error) {

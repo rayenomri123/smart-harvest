@@ -4,8 +4,8 @@ const authController = require('../controllers/notifController');
 
 
 router.get('/all', authController.getNotif);
-router.post('/count', authController.countNotif);
+router.get('/count', authController.countNotif);
 router.delete('/del', authController.deleteNotif);
-router.delete('/create', authController.createNotif);
+router.post('/create', authController.createNotif);
 
 module.exports = router; 

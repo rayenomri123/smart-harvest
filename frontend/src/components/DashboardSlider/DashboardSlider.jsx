@@ -10,7 +10,12 @@ import { MdOutlineSpa, MdDashboard } from 'react-icons/md';
 import './DashboardSlider.css';
 import { logout } from '../../services/authService';
 
+
+
+
 const DashboardSlider = () => {
+  
+
   const [isOpen, setIsOpen] = useState(() => {
     const savedState = localStorage.getItem('dashboardSliderState');
     return savedState !== null ? JSON.parse(savedState) : true;
@@ -18,13 +23,40 @@ const DashboardSlider = () => {
 
   const storedPlantString = localStorage.getItem('selectedPlant');
   const storedPlant = storedPlantString ? JSON.parse(storedPlantString) : null;
+  const [notif,setNotif] = useState();
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await fetch('http://localhost:3500/api/notif/count', {
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+          credentials: 'include' // Si vous utilisez des cookies
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        
+        setNotif(data.count);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+  
+    fetchNotifications();
+  });
 
   useEffect(() => {
     localStorage.setItem('dashboardSliderState', JSON.stringify(isOpen));
   }, [isOpen]);
   
   const sliderRef = useRef(null);
-  const userName = "Rayen";
+  const userName = localStorage?.getItem('user')
 
   const toggleSlider = () => {
     setIsOpen(!isOpen);
@@ -71,43 +103,40 @@ const DashboardSlider = () => {
             </div>
 
             <nav className="dash-slider__nav">
-              <NavLink 
-                to="/dashboard" 
-                end
-                className={({ isActive }) => 
-                  `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
-                }
-                style={{ fontWeight: 'inherit' }}
-              >
-                <span className="dash-slider__nav-icon"><MdDashboard /></span>
-                <span>Dashboard</span>
-              </NavLink>
-              
-              <NavLink 
-                to={`/${storedPlant.id_plant}/plant-profile`} 
-                end
-                className={({ isActive }) => 
-                  `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
-                }
-                style={{ fontWeight: 'inherit' }}
-              >
-                <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
-                <span>Plant Profile</span>
-              </NavLink>
-              
-              <NavLink 
-                to="/notifications" 
-                end
-                className={({ isActive }) => 
-                  `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
-                }
-                style={{ fontWeight: 'inherit' }}
-              >
-                <span className="dash-slider__nav-icon"><FiBell /></span>
-                <span>Notifications</span>
-                <span className="dash-slider__badge">3</span>
-              </NavLink>
-            </nav>
+  <NavLink 
+    to="/dashboard" 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+    <span className="dash-slider__nav-icon"><MdDashboard /></span>
+    <span>Dashboard</span>
+  </NavLink>
+  
+  <NavLink 
+    to={`/${storedPlant.id_plant}/plant-profile`} 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+    <span className="dash-slider__nav-icon"><MdOutlineSpa /></span>
+    <span>Plant Profile</span>
+  </NavLink>
+  
+  <NavLink 
+    to="/notifications" 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+    <span className="dash-slider__nav-icon"><FiBell /></span>
+    <span>Notifications</span>
+    <span className="dash-slider__badge">{notif}</span>
+  </NavLink>
+</nav>
 
             <div className="dash-slider__footer">
               <div className="dash-slider__nav-item dash-slider__logout" onClick={handleLogout}>
