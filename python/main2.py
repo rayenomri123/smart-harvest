@@ -251,11 +251,11 @@ while 1:
         if 'val' not in locals():
             val=40
         if 'val2' not in locals():
-            val2=0.5
+            val2=50
         debit =1 # en ml/s
         eau=(old_temperature*(1-old_humidite/100))*(1-val/100)*sqrt(val2/100)*20#<- coeffisiotn de stabilisation entre 10 et 30
         pin=get_pin_id(plant_id,"pompe a eau")
-        if i>10*60*60/5:
+        if val < 40:
             # relay(1,pin)
             # time.sleep(eau/debit)
             # relay(0,pin)
