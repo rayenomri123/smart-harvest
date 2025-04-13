@@ -21,7 +21,7 @@ const DashboardSlider = () => {
     return savedState !== null ? JSON.parse(savedState) : true;
   });
 
-  const storedPlantString = localStorage.getItem('selectedPlant');
+  const storedPlantString = localStorage.getItem('selectedPlant') | "";
   const storedPlant = storedPlantString ? JSON.parse(storedPlantString) : null;
   const [notif,setNotif] = useState();
   useEffect(() => {
@@ -115,7 +115,7 @@ const DashboardSlider = () => {
   </NavLink>
   
   <NavLink 
-    to={`/${storedPlant.id_plant}/plant-profile`} 
+    to={`/${storedPlant?.id_plant}/plant-profile`} 
     end
     className={({ isActive }) => 
       `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`

@@ -29,8 +29,6 @@ const PlantProfile = () => {
   const [tankLevel, setTankLevel] = useState(0);
   const [pumpWorking, setPumpWorking] = useState(false);
   const [statuses, setStatuses] = useState([]);
-  console.log(storedPlant)
-  console.log(plant)
   const getTankStatus = (level) => {
     if (level === 0) return 'empty';
     if (level > 0 && level <= 25) return 'low';
