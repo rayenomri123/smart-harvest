@@ -6,7 +6,7 @@
   height: 100vh;
   background-color: rgb(44, 84, 50);
   color: white;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 0 8px rgba(0, 0, 0, 0.253);
   transition: width 0.3s ease;
   z-index: 1000;
   overflow: hidden;
@@ -203,6 +203,18 @@
 
 .dash-slider__edit-btn svg {
   font-size: 20px;
+}
+
+
+.separator1, .separator2 {
+  font-weight: 200;
+  margin-bottom: 10px;
+  font-family: 'poppins';
+  font-size: 1rem;
+}
+
+.separator2 {
+  margin-top: 40px;
 }
 
 /* Responsive Adjustments for Mobile Devices */

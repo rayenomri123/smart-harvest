@@ -5,7 +5,9 @@ import {
   FiChevronRight, 
   FiBell,
   FiLogOut,
-  FiEdit 
+  FiEdit,
+  FiUser,
+  FiLock
 } from 'react-icons/fi';
 import { MdOutlineSpa, MdDashboard } from 'react-icons/md';
 import './DashboardSlider.css';
@@ -110,6 +112,7 @@ const DashboardSlider = () => {
             </div>
 
             <nav className="dash-slider__nav">
+            <div className="separator1">Plant</div>
   <NavLink 
     to="/dashboard" 
     end
@@ -142,6 +145,28 @@ const DashboardSlider = () => {
     <span className="dash-slider__nav-icon"><FiBell /></span>
     <span>Notifications</span>
     <span className="dash-slider__badge">{notif}</span>
+  </NavLink>
+  
+  <div className="separator2">Account</div>
+  <NavLink 
+    to={`/profile`} 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+   <span className="dash-slider__nav-icon"><FiUser /></span>
+    <span>Account Details</span>
+  </NavLink>
+  <NavLink 
+    to={`/#`} 
+    end
+    className={({ isActive }) => 
+      `dash-slider__nav-item ${isActive ? "dash-slider__nav-item--active" : ""}`
+    }
+  >
+   <span className="dash-slider__nav-icon"><FiLock /></span>
+    <span>Change Password</span>
   </NavLink>
 </nav>
 
