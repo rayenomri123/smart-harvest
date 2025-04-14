@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   FiChevronLeft, 
   FiChevronRight, 
   FiBell,
-  FiLogOut 
+  FiLogOut,
+  FiEdit 
 } from 'react-icons/fi';
 import { MdOutlineSpa, MdDashboard } from 'react-icons/md';
 import './DashboardSlider.css';
@@ -15,13 +16,13 @@ import { logout } from '../../services/authService';
 
 const DashboardSlider = () => {
   
-
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(() => {
     const savedState = localStorage.getItem('dashboardSliderState');
     return savedState !== null ? JSON.parse(savedState) : true;
   });
 
-  const storedPlantString = localStorage.getItem('selectedPlant') | "";
+  const storedPlantString = localStorage.getItem('selectedPlant');
   const storedPlant = storedPlantString ? JSON.parse(storedPlantString) : null;
   const [notif,setNotif] = useState();
   useEffect(() => {
@@ -100,6 +101,12 @@ const DashboardSlider = () => {
                 <h3>{userName}</h3>
                 <span className="dash-slider__status">Online</span>
               </div>
+              <button 
+                className="dash-slider__edit-btn"
+                onClick={() => navigate('/profile')}
+              >
+                <FiEdit />
+              </button>
             </div>
 
             <nav className="dash-slider__nav">

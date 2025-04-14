@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useState, useEffect } from 'react';
 import { auth_test } from './services/authService';
 import LandingPage from './pages/LandingPage/LandingPage.jsx';
-import Home from './pages/Home/Home.jsx';
+
 import Navbar from './components/Navbar/Navbar.jsx';
 import SignIn from './pages/SignIn/SignIn.jsx';
 import Footer from './components/Footer/Footer.jsx';
@@ -15,6 +15,7 @@ import PlantProfile from './pages/PlantProfile/PlantProfile.jsx';
 import About from './pages/About/About.jsx';
 import './App.css';
 import NotificationPage from './pages/NotificatonsPage/NotificationsPage.jsx';
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -74,7 +75,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Home />} />
+      
         
         <Route 
           path="/about" 
@@ -83,6 +84,13 @@ function App() {
           } 
         />
 
+        <Route 
+          path="/profile" 
+          element={
+              <ProfilePage />
+          } 
+        />  
+        
         <Route 
           path="/sign-in" 
           element={

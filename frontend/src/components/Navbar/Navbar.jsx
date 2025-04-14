@@ -29,7 +29,7 @@ const Navbar = () => {
         {/* Logo and Brand */}
         <div className="brand-wrapper">
           <img 
-            src="./src/assets/logo.png"
+            src="../src/assets/logo.png"
             alt="Logo" 
             className="logo"
           />

@@ -23,8 +23,12 @@ const updateUsers = async (req, res) => {
         const prenom = req.body.prenom || user[0].prenom;
         const numero_tel = req.body.numero_tel || user[0].numero_tel;
         const adresse_email = req.body.adresse_email || user[0].adresse_email;
-        const password = req.body.password || user[0].password;
-        const cPassword = await bcrypt.hash(password, 10);
+        const password = req.body.password || '';
+        let cPassword = await bcrypt.hash(password, 10);
+        if (password == '') {
+            cPassword = user[0].password
+        }
+        
 
         //mise a jour
         pool.execute('UPDATE Compte SET nom = ?, prenom = ?, numero_tel = ?, adresse_email = ?, mot_de_passe = ? WHERE id_compte = ?;', [nom, prenom, numero_tel, adresse_email,cPassword, req.params.id]);
@@ -49,10 +53,14 @@ const updateUser = async (req, res) => {
         const prenom = req.body.prenom || user[0].prenom;
         const numero_tel = req.body.numero_tel || user[0].numero_tel;
         const adresse_email = req.body.adresse_email || user[0].adresse_email;
-        const password = req.body.password || user[0].password;
-        const cPassword = await bcrypt.hash(password, 10);
+        const password = req.body.password || '';
+        let cPassword = await bcrypt.hash(password, 10);
+        if (password == '') {
+            cPassword = user[0].password
+        }
+        
 
-
+        
         //mise a jour
         pool.execute('UPDATE Compte SET nom = ?, prenom = ?, numero_tel = ?, adresse_email = ?, mot_de_passe = ? WHERE id_compte = ?;', [nom, prenom, numero_tel, adresse_email,cPassword, req.user.id]);
 
