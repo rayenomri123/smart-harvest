@@ -1,3 +1,140 @@
-.profile-page-body {
-    background-color: white;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+.profile-settings-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8faf7;
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
 }
+
+.profile-settings-card {
+  background: rgba(255, 255, 255, 0);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.profile-settings-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+}
+
+.profile-settings-header h1 {
+  color: #2c5432;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 2.5rem;
+}
+
+.profile-settings-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #2c5432;
+  margin: 0 auto 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+  margin-bottom: 2rem;
+}
+
+.settings-input-group {
+  margin-bottom: -1rem;
+}
+
+.settings-input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #3a3a3a;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.settings-form-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0e6df;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.settings-form-input:focus {
+  outline: none;
+  border-color: #279d39;
+  box-shadow: 0 0 0 3px rgba(39, 157, 57, 0.1);
+}
+
+.settings-save-button,
+.settings-delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  gap: 1rem;
+}
+
+.settings-save-button {
+  background-color: #2c5432;
+  color: white;
+}
+
+.settings-save-button:hover {
+  background-color: #1e3a24;
+}
+
+.settings-delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.settings-delete-button:hover {
+  background-color: #bb2d3b;
+}
+
+.button-icon {
+  font-size: 1.1rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-settings-card {
+    padding: 1.5rem;
+  }
+}
+
+
