@@ -174,6 +174,8 @@ def add_notif(id_plant,type,title,contenu):
     if len(results)==0 or type =="success":
         cursor.execute("INSERT INTO Notif (time,id_plant,type,title,contenu) VALUES (%s,%s,%s,%s,%s)", (int(round(time.time() * 1000)),id_plant,type,title,contenu))
     connection.commit()
+
+    
 def remove_notif(id_plant,contenu):
     connection = get_db_connection()
     cursor = connection.cursor()
@@ -218,31 +220,74 @@ while 1:
         
             # val=mesurer_distance()
             
-            if mesurer_distance()<=25:
-                add_notif(plant_id,"Warning","low water tank level","3abini plz rak bech to9tel el nabta")
+            if mesurer_distance() <= 25:
+                add_notif(
+                    plant_id,
+                    "Warning",
+                    "Low Water Tank Level",
+                    "The water tank level is critically low. Please refill it immediately to protect the plant."
+                )
             else:
-                remove_notif(plant_id,"3abini plz rak bech to9tel el nabta")
-            if res[1]=="humidite sol":
-                if  val<=40:
-                    add_notif(plant_id,"Warning","che7t","es9iwni")
+                remove_notif(
+                    plant_id,
+                    "The water tank level is critically low. Please refill it immediately to protect the plant."
+                )
+
+            if res[1] == "humidite sol":
+                if val <= 40:
+                    add_notif(
+                        plant_id,
+                        "Warning",
+                        "Dry Soil Detected",
+                        "Soil moisture is below the optimal level. Please water the plant."
+                    )
                 else:
-                    remove_notif(plant_id,"es9iwni")
-            if res[1]=="luminosite":
-                if val2<=40:
-                    add_notif(plant_id,"Warning","bret","nawarha a3leya plz")
+                    remove_notif(
+                        plant_id,
+                        "Soil moisture is below the optimal level. Please water the plant."
+                    )
+
+            if res[1] == "luminosite":
+                if val2 <= 40:
+                    add_notif(
+                        plant_id,
+                        "Warning",
+                        "Low Light Intensity",
+                        "Insufficient light detected. Please increase the ambient light to ensure healthy growth."
+                    )
                 else:
-                    remove_notif(plant_id,"nawarha a3leya plz")
-            if res[1]=="humidite air":
-                if old_humidite<=40:
-                    add_notif(plant_id,"Warning","ncheft","belni chewaya")
+                    remove_notif(
+                        plant_id,
+                        "Insufficient light detected. Please increase the ambient light to ensure healthy growth."
+                    )
+
+            if res[1] == "humidite air":
+                if old_humidite <= 40:
+                    add_notif(
+                        plant_id,
+                        "Warning",
+                        "Low Air Humidity",
+                        "Air humidity is below the recommended level. Please consider humidifying the environment."
+                    )
                 else:
-                    remove_notif(plant_id,"belni chewaya")
-                
-                if old_temperature <=0:
-                    add_notif(plant_id,"Warning","baarrrd","dafini")
+                    remove_notif(
+                        plant_id,
+                        "Air humidity is below the recommended level. Please consider humidifying the environment."
+                    )
+
+                if old_temperature <= 0:
+                    add_notif(
+                        plant_id,
+                        "Warning",
+                        "Cold Temperature",
+                        "Temperature is too low. Please take measures to warm the surroundings."
+                    )
                 else:
-                    remove_notif(plant_id,"dafini")
-        
+                    remove_notif(
+                        plant_id,
+                        "Temperature is too low. Please take measures to warm the surroundings."
+                    )
+
         
         if 'old_humidite' not in locals():
             old_humidite=50

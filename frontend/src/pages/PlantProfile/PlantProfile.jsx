@@ -14,6 +14,7 @@ import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
 import { deletePlant, changeMode } from '../../services/plantService';
 import { getLuminosity, controlRelay, getSensorsById, getSoilHumidity, getTempHumidity, getDistance } from '../../services/deteService';
+import LineChart from '../../components/LineChartComponent/LineChartComponent';
 
 const PlantProfile = () => {
 
@@ -130,7 +131,7 @@ const PlantProfile = () => {
     setPumpWorking(true);
     try {
       // Adjust the relay control value/timing as needed 
-      await controlRelay(id_p, 1 * 10000);
+      await controlRelay(id_p, 1 * 4000);
     } catch (error) {
       console.error(error);
     } finally {
@@ -243,6 +244,23 @@ const PlantProfile = () => {
         <FaTrash className="button-icon" />
         DELETE
       </button>
+      <div className="charts-container">
+  <LineChart 
+    title="Soil Humidity History"
+    xData={[1, 2, 3, 4, 5]}
+    seriesData={[30, 45, 25, 60, 40]}
+  />
+  <LineChart 
+    title="Temperature History"
+    xData={[1, 2, 3, 4, 5]}
+    seriesData={[22, 24, 23, 25, 21]}
+  />
+  <LineChart 
+    title="Luminosity History"
+    xData={[1, 2, 3, 4, 5]}
+    seriesData={[80, 75, 90, 85, 95]}
+  />
+</div>
     </div>
   );
 };
