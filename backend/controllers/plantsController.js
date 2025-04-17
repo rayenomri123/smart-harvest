@@ -103,4 +103,6 @@ const changeModeById = async (req, res) => {
     }
 };
 
+
+
 module.exports = {getAllPlants, createPlant, addSensor, deleteSensor, getPlantInfo, deletePlant,getAllSensors,getSensorsById,changeModeById};
