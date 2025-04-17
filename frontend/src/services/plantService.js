@@ -52,7 +52,7 @@ export async function changeMode(id_plant,mode=0,p=0) {
 
 export async function getHistory(id_plant,detector) {
   try {
-    const response = await fetch(`http://localhost:3500/api/plants/history`, {
+    const response = await fetch(`http://localhost:3500/api/data/history`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
