@@ -7,6 +7,37 @@
   transition: transform 0.2s ease;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   cursor: pointer;
+  position: relative;
+ 
+}
+
+.delete-button-card {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 1);
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button-card:hover{
+  background-color: #e74c3c;
+}
+
+.delete-icon-card {
+  color: #666;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.delete-button-card:hover .delete-icon-card {
+  color: white; /* Red color on hover */
 }
 
 .plant-card-container:hover {

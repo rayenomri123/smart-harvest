@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { 
-  FaTint, 
-  FaTrash, 
-  FaCheckCircle, 
-  FaExclamationTriangle, 
-  FaTimesCircle,
-  FaSkullCrossbones
+  FaTint
 } from 'react-icons/fa';
 import { FaGlassWater } from 'react-icons/fa6';
 import { GiPlantWatering, GiAutoRepair } from "react-icons/gi";
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
-import { deletePlant, changeMode,getHistory } from '../../services/plantService';
+import {changeMode,getHistory } from '../../services/plantService';
 import { getLuminosity, controlRelay, getSensorsById, getSoilHumidity, getTempHumidity, getDistance } from '../../services/deteService';
 import LineChart from '../../components/LineChartComponent/LineChartComponent';
 
@@ -226,12 +221,7 @@ const getNote = (type, levelLabel) => {
     }
   };
 
-  const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${plant.nom}? This action cannot be undone.`)) {
-      deletePlant(id_p);
-      navigate('/dashboard');
-    }
-  };
+ 
 
   if (!plant) {
     return (
@@ -337,10 +327,6 @@ const getNote = (type, levelLabel) => {
           </div>
         </div>
       </div>
-      <button className="delete-button" onClick={handleDelete}>
-        <FaTrash className="button-icon" />
-        DELETE
-      </button>
       <div className="charts-container">
   <LineChart 
     title="Soil Humidity History"

@@ -94,16 +94,18 @@ const Dashboard = () => {
       <div className="plants-grid-container">
         <div className="plants-container">
           {plants.map(plant => (
-            <div key={plant.id} onClick={() => handlePlantClick(plant)}>
-
-              <PlantCard 
-                plantName={plant.nom}
-                imageUrl={plant.url}
-                mode={plant.mode}
-                id={plant.id_plant}
-                date={plant.date}
-              />
-            </div>
+            <div key={plant.id} className="plant-card-wrapper">
+            {/* Clickable area covering 70% of the card */}
+            <div className="clickable-area" onClick={() => handlePlantClick(plant)}></div>
+            
+            <PlantCard 
+              plantName={plant.nom}
+              imageUrl={plant.url}
+              date={plant.date}
+              mode={plant.mode}
+              id={plant.id_plant}
+            />
+          </div>
           ))}
           
           <div className="plant-card add-button" onClick={handleAddPlantClick}>
