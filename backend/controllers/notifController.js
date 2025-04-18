@@ -2,7 +2,7 @@ const {pool} = require('../database/connect');
 
 const getNotif = async (req, res) => {
     try {
-        const [result] = await pool.execute('SELECT * FROM Notif;');
+        const [result] = await pool.execute('SELECT * FROM Notif order by id_notif desc;');
         res.json(result);
     } catch (error) {
         console.error("Erreur lors de la recherche des notifications :", error.message);

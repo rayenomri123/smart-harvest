@@ -40,11 +40,11 @@ const PlantProfile = () => {
     async function fetchHistory() {
       try {
         const [x, series] = await getHistory(id_p, 'humidite sol');
-        setXData(x);
-        setSeriesData(series);
+        setXData(x.slice().reverse());
++       setSeriesData(series.slice().reverse());
         const [x2, series2] = await getHistory(id_p, 'luminosite');
-        setXData2(x2);
-        setSeriesData2(series2);
+        setXData2(x2.slice().reverse());
++       setSeriesData2(series2.slice().reverse());
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error);
       }

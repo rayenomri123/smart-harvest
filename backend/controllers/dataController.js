@@ -4,7 +4,7 @@ require('dotenv').config();
 const history = async (req, res) => {
     try {
         const {id_plant, detector} = req.body;
-        const [rows] = await pool.query('SELECT v.* FROM SensorType s, Pin_Plant pp, Pin p, Val v where v.id_pin=p.id_pin and p.id_pin=pp.id_pin and p.id_sensor_type=s.id_sensor_type and pp.id_plant=? and s.nom=? limit 20', [id_plant,detector]);
+        const [rows] = await pool.query('SELECT v.* FROM SensorType s, Pin_Plant pp, Pin p, Val v where v.id_pin=p.id_pin and p.id_pin=pp.id_pin and p.id_sensor_type=s.id_sensor_type and pp.id_plant=? and s.nom=? order by date desc limit 20', [id_plant,detector]);
         
         res.status(200).json(rows);
         
