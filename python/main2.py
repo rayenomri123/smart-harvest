@@ -41,7 +41,7 @@ ads = ADS.ADS1115(i2c, address=0x48)
 
 # Calibration (à ajuster) pour le modul d'humidité de sol
 dry_value = 20000  # Valeur pour sol sec (à mesurer avec 3.3V)
-wet_value = 10000  # Valeur pour sol humide (à mesurer avec 3.3V)
+wet_value = 5000  # Valeur pour sol humide (à mesurer avec 3.3V)
 
 # Modèle pour valider les données reçues
 
@@ -174,21 +174,26 @@ def add_notif(id_plant,type,title,contenu):
     if len(results)==0 or type =="success":
         cursor.execute("INSERT INTO Notif (time,id_plant,type,title,contenu) VALUES (%s,%s,%s,%s,%s)", (int(round(time.time() * 1000)),id_plant,type,title,contenu))
     connection.commit()
-
-    
+    cursor.close()
+    cursor2.close()
+    connection.close()
 def remove_notif(id_plant,contenu):
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute("delete from Notif where id_plant=%s and contenu=%s",(id_plant,contenu))
 
     connection.commit()
+    cursor.close()
+    connection.close()
 #------------main------------
 humidite, temperature, old_humidite, old_temperature=0,0,0,0
-connection = get_db_connection()
-cursor = connection.cursor()
-cursor2 = connection.cursor()
+
 i=0
 while 1:
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor2 = connection.cursor()
+    cursor10 = connection.cursor()
     cursor.execute("select id_plant from Plant")
     results = cursor.fetchall()[0]
     for id in results:
@@ -202,28 +207,31 @@ while 1:
                 if humidite is not None and temperature is not None:
                         old_humidite, old_temperature = humidite, temperature
                 humidite, temperature = lire_dht11(pin)
-                if humidite is None or temperature is None:
-                    insert_var(res[2],str(old_temperature)+"°C")
-                    insert_var(res[2],old_humidite)
-                else:
-                    insert_var(res[2],str(temperature)+"°C")
-                    insert_var(res[2],humidite)
+                if i==11:
+                    if humidite is None or temperature is None:
+                        insert_var(res[2],str(old_temperature)+"°C")
+                        insert_var(res[2],old_humidite)
+                    else:
+                        insert_var(res[2],str(temperature)+"°C")
+                        insert_var(res[2],humidite)
             elif res[1]=="humidite sol":
                 chanal=get_pin_id(plant_id,"humidite sol")
-                val=map_humidity(chanal.value)
-                insert_var(res[2],val)
+                val=map_humidity(chanal.value)            
+                if i==11:
+                    insert_var(res[2],val)
 
             elif res[1]=="luminosite":
                 chanal2=get_pin_id(plant_id,"luminosite")
                 val2=ldr(chanal2.voltage)
-                insert_var(res[2],val2)
+                if i==11:
+                    insert_var(res[2],val2)
         
             # val=mesurer_distance()
             
             if mesurer_distance() <= 25:
                 add_notif(
                     plant_id,
-                    "Warning",
+                    "water",
                     "Low Water Tank Level",
                     "The water tank level is critically low. Please refill it immediately to protect the plant."
                 )
@@ -237,7 +245,7 @@ while 1:
                 if val <= 40:
                     add_notif(
                         plant_id,
-                        "Warning",
+                        "growth",
                         "Dry Soil Detected",
                         "Soil moisture is below the optimal level. Please water the plant."
                     )
@@ -251,7 +259,7 @@ while 1:
                 if val2 <= 40:
                     add_notif(
                         plant_id,
-                        "Warning",
+                        "light",
                         "Low Light Intensity",
                         "Insufficient light detected. Please increase the ambient light to ensure healthy growth."
                     )
@@ -265,7 +273,7 @@ while 1:
                 if old_humidite <= 40:
                     add_notif(
                         plant_id,
-                        "Warning",
+                        "growth",
                         "Low Air Humidity",
                         "Air humidity is below the recommended level. Please consider humidifying the environment."
                     )
@@ -278,7 +286,7 @@ while 1:
                 if old_temperature <= 0:
                     add_notif(
                         plant_id,
-                        "Warning",
+                        "light",
                         "Cold Temperature",
                         "Temperature is too low. Please take measures to warm the surroundings."
                     )
@@ -297,17 +305,28 @@ while 1:
             val=40
         if 'val2' not in locals():
             val2=50
-        debit =1 # en ml/s
+        debit =25 # en ml/s
         eau=(old_temperature*(1-old_humidite/100))*(1-val/100)*sqrt(val2/100)*20#<- coeffisiotn de stabilisation entre 10 et 30
         pin=get_pin_id(plant_id,"pompe a eau")
-        if val < 40:
-            # relay(1,pin)
-            # time.sleep(eau/debit)
-            # relay(0,pin)
-            print("es9i")#a effacer
+        query="select mode from Plant where id_plant = %s"
+        cursor10.execute(query, (plant_id,))
+        results10 = cursor10.fetchall()[0]
+        print(results10[0])
+
+        if val < 40 and i==1 and results10[0] == 'automatic':
+            relay(1,pin)
+            time.sleep(eau/debit)
+            relay(0,pin)
 
     i+=1
+    if i >=12 :
+        i=0
     time.sleep(5)
+    connection.commit() 
+    cursor.close()
+    cursor2.close()
+    cursor10.close()
+    connection.close()
         
         
 

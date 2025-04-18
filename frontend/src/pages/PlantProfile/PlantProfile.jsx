@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { 
   FaTint, 
@@ -12,7 +12,7 @@ import { FaGlassWater } from 'react-icons/fa6';
 import { GiPlantWatering, GiAutoRepair } from "react-icons/gi";
 import DashboardSlider from '../../components/DashboardSlider/DashboardSlider';
 import './PlantProfile.css';
-import { deletePlant, changeMode } from '../../services/plantService';
+import { deletePlant, changeMode,getHistory } from '../../services/plantService';
 import { getLuminosity, controlRelay, getSensorsById, getSoilHumidity, getTempHumidity, getDistance } from '../../services/deteService';
 import LineChart from '../../components/LineChartComponent/LineChartComponent';
 
@@ -26,10 +26,33 @@ const PlantProfile = () => {
 
   const chemin = window.location.pathname;
   const id_p = chemin.split('/')[1];
+  const [showDropdown, setShowDropdown] = useState(false);
   const [currentMode, setCurrentMode] = useState(plant?.mode || 'automatic');
   const [tankLevel, setTankLevel] = useState(0);
   const [pumpWorking, setPumpWorking] = useState(false);
   const [statuses, setStatuses] = useState([]);
+  const [xData, setXData] = useState([]);
+  const [seriesData, setSeriesData] = useState([]);
+  const [xData2, setXData2] = useState([]);
+  const [seriesData2, setSeriesData2] = useState([]);
+
+  useEffect(() => {
+    async function fetchHistory() {
+      try {
+        const [x, series] = await getHistory(id_p, 'humidite sol');
+        setXData(x);
+        setSeriesData(series);
+        const [x2, series2] = await getHistory(id_p, 'luminosite');
+        setXData2(x2);
+        setSeriesData2(series2);
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error);
+      }
+    }
+
+    fetchHistory();
+  });
+
   const getTankStatus = (level) => {
     if (level === 0) return 'empty';
     if (level > 0 && level <= 25) return 'low';
@@ -37,6 +60,18 @@ const PlantProfile = () => {
     return 'good';
   };
 
+  const dropdownRef = useRef(null);
+
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+  
   const getSensorData = async (sensorId, type = 1) => {
     try {
       switch (sensorId) {
@@ -63,7 +98,6 @@ const PlantProfile = () => {
       return "20";
     }
   };
-
   useEffect(() => {
     changeMode(id_p).then(res => setCurrentMode(res));
   }, [id_p]);
@@ -126,16 +160,17 @@ const PlantProfile = () => {
       .catch(error => console.error('Error changing mode:', error));
   };
 
-  const handleWater = async () => {
-    if (pumpWorking) return; // Block if pump is already working
+  const handleWater = async (volume) => {
+    if (pumpWorking) return;
     setPumpWorking(true);
     try {
-      // Adjust the relay control value/timing as needed 
-      await controlRelay(id_p, 1 * 4000);
+      const duration = volume * 40; // 25mL = 1s (1000ms)
+      await controlRelay(id_p, duration);
     } catch (error) {
       console.error(error);
     } finally {
       setPumpWorking(false);
+      setShowDropdown(false);
     }
   };
 
@@ -200,14 +235,30 @@ const PlantProfile = () => {
         </div>
       </div>
       <div className="plant-profile-buttons">
-        <button 
-          className="watering-button" 
-          onClick={handleWater}
-          disabled={currentMode === 'automatic' || pumpWorking}
+      <div className="watering-container" ref={dropdownRef}>
+  <button 
+    className="watering-button" 
+    onClick={() => setShowDropdown(!showDropdown)}
+    disabled={currentMode === 'automatic' || pumpWorking}
+  >
+    <FaTint className="button-icon" />
+    {pumpWorking ? 'WATERING...' : 'WATERING'}
+  </button>
+  
+  {showDropdown && (
+    <div className="dropdown-menu">
+      {[25, 50, 75, 100].map((volume) => (
+        <div
+          key={volume}
+          className="dropdown-item"
+          onClick={() => handleWater(volume)}
         >
-          <FaTint className="button-icon" />
-          {pumpWorking ? 'WATERING...' : 'WATERING'}
-        </button>
+          {volume} mL
+        </div>
+      ))}
+    </div>
+  )}
+</div>
         <div className="toggle-container">
           <button 
             className={`toggle-option ${currentMode === 'automatic' ? 'active' : ''}`}
@@ -247,18 +298,14 @@ const PlantProfile = () => {
       <div className="charts-container">
   <LineChart 
     title="Soil Humidity History"
-    xData={[1, 2, 3, 4, 5]}
-    seriesData={[30, 45, 25, 60, 40]}
-  />
-  <LineChart 
-    title="Temperature History"
-    xData={[1, 2, 3, 4, 5]}
-    seriesData={[22, 24, 23, 25, 21]}
+    
+    xData={xData}
+    seriesData={seriesData}
   />
   <LineChart 
     title="Luminosity History"
-    xData={[1, 2, 3, 4, 5]}
-    seriesData={[80, 75, 90, 85, 95]}
+    xData={xData2}
+    seriesData={seriesData2}
   />
 </div>
     </div>

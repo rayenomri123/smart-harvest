@@ -70,8 +70,10 @@ export async function getHistory(id_plant,detector) {
     }
 
     const data = await response.json();
-    console.log(data);
-    return data;
+    const dates = data.map(item => Number(item.date));
+    const valeurs = data.map(item => Number(item.valeur));
+    console.log(data)
+    return [dates,valeurs];
   } catch (error) {
     console.error("Token refresh error:", error);
     return false;

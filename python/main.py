@@ -41,7 +41,7 @@ ads = ADS.ADS1115(i2c, address=0x48)
 
 # Calibration (à ajuster) pour le modul d'humidité de sol
 dry_value = 20000  # Valeur pour sol sec (à mesurer avec 3.3V)
-wet_value = 10000  # Valeur pour sol humide (à mesurer avec 3.3V)
+wet_value = 5000  # Valeur pour sol humide (à mesurer avec 3.3V)
 
 # Modèle pour valider les données reçues
 class RelayCommand(BaseModel):
