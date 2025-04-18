@@ -4,7 +4,7 @@ import PlantFormModal from '../PlantFormModal/PlantFormModal.jsx';
 import './PlantImageSelector.css';
 
 const plantImages = [
-  { id: 1, name: 'Monstera Deliciosa', url: '../src/assets/plant1.png' },
+  { id: 1, name: 'Lavandula', url: '../src/assets/plant1.png' },
   { id: 2, name: 'Snake Plant', url: '../src/assets/plant2.png' },
   { id: 3, name: 'Fiddle Leaf Fig', url: '../src/assets/plant3.png' },
   { id: 4, name: 'Golden Pothos', url: '../src/assets/plant4.png' },
