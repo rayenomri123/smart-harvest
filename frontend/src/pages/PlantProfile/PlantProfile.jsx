@@ -105,32 +105,52 @@ useEffect(() => {
   const updateAllSensors = async () => {
     try {
       const sensors = await getSensorsById(id_p);
-      const humiditeAirSensor = sensors.find(sensor => sensor.nom === "humidite air");
-      const idSensorTypeHumiditeAir = humiditeAirSensor?.id_sensor_type;
+      const humidAir = sensors.find(s => s.nom === 'humidite air');
+      if (humidAir) sensors.push({ ...humidAir, nom: 'temperature' });
 
-      // If there's a humidite air sensor, add the temperature sensor.
-      if (humiditeAirSensor) {
-        sensors.push({ id_sensor_type: idSensorTypeHumiditeAir, nom: "temperature" });
-      }
+      const results = await Promise.all(
+        sensors.map(async (sensor) => {
+          let raw;
+          switch (sensor.nom) {
+            case 'humidite sol': raw = await getSoilHumidity(id_p); break;
+            case 'humidite air': raw = await getTempHumidity(id_p); break;
+            case 'temperature': raw = await getTempHumidity(id_p); break;
+            case 'luminosite': raw = await getLuminosity(id_p); break;
+            case 'ultra son': raw = await getDistance(); break;
+            default: return null;
+          }
 
-      const updatedStatuses = await Promise.all(
-        sensors.filter(sensor => sensor.nom !== 'pompe a eau').map(async (sensor) => {
-          const value = await getSensorData(sensor.nom);
+          let value;
+          if (sensor.nom === 'humidite sol') value = raw.humiditer_sol;
+          else if (sensor.nom === 'humidite air') value = raw.humidity;
+          else if (sensor.nom === 'temperature') value = raw.temp;
+          else if (sensor.nom === 'luminosite') value = raw.Luminosite;
+          else if (sensor.nom === 'ultra son') value = raw.distance;
+
+          const level = getStatus(value);
+          const note = getNote(sensor.nom, level);
+          const display = sensor.nom === 'temperature'
+            ? `${value}°C`
+            : `${Math.floor(value)}%`;
+
           return {
             type: sensor.nom,
-            value: value,
+            value: { aff: display, val: value },
             label: sensor.nom.toUpperCase(),
-            note: ''
+            note
           };
         })
       );
 
-      setTankLevel(await getSensorData("ultra son"));
-      setStatuses(updatedStatuses);
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour des capteurs:", error);
+      setStatuses(results.filter(Boolean));
+      const tank = results.find(r => r.type === 'ultra son');
+      if (tank) setTankLevel(tank.value.val);
+    } catch (err) {
+      console.error('Error updating sensors:', err);
     }
   };
+
+  
 
   useEffect(() => {
     updateAllSensors();
@@ -141,11 +161,51 @@ useEffect(() => {
   }, [id_p]);
 
   const getStatus = (value) => {
-    if (value >= 50) return 'good';
-    if (value >= 20 && value < 49) return 'medium';
-    if (value >= 1 && value < 19) return 'low';
+    if (value >= 75) return 'good';
+    if (value >= 50 && value < 75) return 'medium';
+    if (value >= 25 && value < 50) return 'low';
+    if (value >= 1 && value < 25) return 'verylow';
     return 'empty';
   };
+
+// inside your PlantProfile component
+const getNote = (type, levelLabel) => {
+  const notes = {
+    'humidite sol': {
+      good:      'Soil is too wet, reduce watering.',
+      medium:    'Soil moisture is ideal, no action needed.',
+      low:       'Soil is drying, plan to water soon.',
+      verylow:   'Soil is very dry, water as soon as possible.',
+      empty:     'No moisture detected, water immediately.'
+    },
+    luminosite: {
+      good:      'Light is very high, move the plant to a dimmer spot.',
+      medium:    'Light is high, monitor and adjust if needed.',
+      low:       'Light is ideal, keep the plant where it is.',
+      verylow:   'Low light, move the plant to a brighter spot.',
+      empty:     'No light detected, check the sensor and environment.'
+    },
+    temperature: {
+      good:      'Temperature is very high!',
+      medium:    'Temperature is very high!',
+      low:       'Temperature is slightly high.',
+      verylow:   'Temperature is within optimal range.',
+      empty:     'No temperature reading, check sensor.'
+    },
+    'humidite air': {
+      good:      'Air is too humid, improve ventilation.',
+      medium:    'Humidity is ideal, no action needed.',
+      low:       'Air is dry, consider increasing humidity.',
+      verylow:   'Humidity is very low, mist or use a humidifier.',
+      empty:     'No humidity detected, check the sensor.'
+    }
+  };
+
+  // normalize your type exactly to how you key your notes:
+  const key = type.toLowerCase();
+  return (notes[key] && notes[key][levelLabel]) || '';
+};
+
 
   function convertirMsEnDate(chaineMs) {
     const ms = parseInt(chaineMs, 10);
@@ -208,12 +268,7 @@ useEffect(() => {
           <div className="plant-status-container">
             {statuses.map((status, index) => {
               const currentStatus = getStatus(status.value.val);
-              const StatusIcon = {
-                good: FaCheckCircle,
-                medium: FaExclamationTriangle,
-                low: FaTimesCircle,
-                empty: FaSkullCrossbones
-              }[currentStatus];
+              [currentStatus];
               return (
                 <div className="plant-status-item" key={index}>
                   <div className='P1'>
@@ -223,7 +278,6 @@ useEffect(() => {
                   </div>
                   <div className='P2'>
                     <div className="status-label">
-                      <StatusIcon className={`status-icon ${currentStatus}`} />
                       {status.label}
                     </div>
                     {status.note && <div className="status-note">{status.note}</div>}

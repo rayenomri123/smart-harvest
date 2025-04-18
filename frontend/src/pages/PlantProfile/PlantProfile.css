@@ -373,16 +373,21 @@
 }
 
 .status-percentage.good {
-  background-color: #6cc070;
+  background-color: #3498db;
 }
 
 .status-percentage.medium {
-  background-color: #f1c40f;
+  background-color: #6cc070;
 }
 
 .status-percentage.low {
+  background-color: #f1c40f;
+}
+
+.status-percentage.verylow {
   background-color: #e74c3c;
 }
+
 
 .status-percentage.empty {
   background-color: #000000;
@@ -395,14 +400,18 @@
 }
 
 .status-icon.good {
-  color: #6cc070;
+  color: #3498db;
 }
 
 .status-icon.medium {
-  color: #f1c40f;
+  color: #6cc070;
 }
 
 .status-icon.low {
+  color: #f1c40f;
+}
+
+.status-icon.verylow {
   color: #e74c3c;
 }
 
