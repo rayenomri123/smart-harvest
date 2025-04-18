@@ -105,50 +105,42 @@ useEffect(() => {
   const updateAllSensors = async () => {
     try {
       const sensors = await getSensorsById(id_p);
-      const humidAir = sensors.find(s => s.nom === 'humidite air');
-      if (humidAir) sensors.push({ ...humidAir, nom: 'temperature' });
-
-      const results = await Promise.all(
-        sensors.map(async (sensor) => {
-          let raw;
-          switch (sensor.nom) {
-            case 'humidite sol': raw = await getSoilHumidity(id_p); break;
-            case 'humidite air': raw = await getTempHumidity(id_p); break;
-            case 'temperature': raw = await getTempHumidity(id_p); break;
-            case 'luminosite': raw = await getLuminosity(id_p); break;
-            case 'ultra son': raw = await getDistance(); break;
-            default: return null;
-          }
-
-          let value;
-          if (sensor.nom === 'humidite sol') value = raw.humiditer_sol;
-          else if (sensor.nom === 'humidite air') value = raw.humidity;
-          else if (sensor.nom === 'temperature') value = raw.temp;
-          else if (sensor.nom === 'luminosite') value = raw.Luminosite;
-          else if (sensor.nom === 'ultra son') value = raw.distance;
-
-          const level = getStatus(value);
-          const note = getNote(sensor.nom, level);
-          const display = sensor.nom === 'temperature'
-            ? `${value}°C`
-            : `${Math.floor(value)}%`;
-
-          return {
-            type: sensor.nom,
-            value: { aff: display, val: value },
-            label: sensor.nom.toUpperCase(),
-            note
-          };
-        })
+      const humiditeAirSensor = sensors.find(sensor => sensor.nom === "humidite air");
+      const idSensorTypeHumiditeAir = humiditeAirSensor?.id_sensor_type;
+  
+      // If there's a humidite air sensor, add the temperature sensor.
+      if (humiditeAirSensor) {
+        sensors.push({ id_sensor_type: idSensorTypeHumiditeAir, nom: "temperature" });
+      }
+  
+      const updatedStatuses = await Promise.all(
+        sensors
+          .filter(sensor => sensor.nom !== 'pompe a eau')
+          .map(async (sensor) => {
+            const value = await getSensorData(sensor.nom);
+  
+            // Calculate note-related data
+            const level = getStatus(value.val);
+            const note = getNote(sensor.nom, level);
+  
+            return {
+              type: sensor.nom,
+              value: value,
+              label: sensor.nom.toUpperCase(),
+              note: note
+            };
+          })
       );
-
-      setStatuses(results.filter(Boolean));
-      const tank = results.find(r => r.type === 'ultra son');
-      if (tank) setTankLevel(tank.value.val);
-    } catch (err) {
-      console.error('Error updating sensors:', err);
+  
+      const tankLevel = await getSensorData("ultra son");
+      setTankLevel(tankLevel);
+      setStatuses(updatedStatuses);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour des capteurs:", error);
     }
   };
+  
+  
 
   
 

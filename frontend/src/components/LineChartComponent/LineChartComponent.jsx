@@ -32,3 +32,34 @@ const LineChartComponent = ({ title, xData, seriesData }) => {
 };
 
 export default LineChartComponent;
+
+
+const updateAllSensors = async () => {
+    try {
+      const sensors = await getSensorsById(id_p);
+      const humiditeAirSensor = sensors.find(sensor => sensor.nom === "humidite air");
+      const idSensorTypeHumiditeAir = humiditeAirSensor?.id_sensor_type;
+
+      // If there's a humidite air sensor, add the temperature sensor.
+      if (humiditeAirSensor) {
+        sensors.push({ id_sensor_type: idSensorTypeHumiditeAir, nom: "temperature" });
+      }
+
+      const updatedStatuses = await Promise.all(
+        sensors.filter(sensor => sensor.nom !== 'pompe a eau').map(async (sensor) => {
+          const value = await getSensorData(sensor.nom);
+          return {
+            type: sensor.nom,
+            value: value,
+            label: sensor.nom.toUpperCase(),
+            note: ''
+          };
+        })
+      );
+
+      setTankLevel(await getSensorData("ultra son"));
+      setStatuses(updatedStatuses);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour des capteurs:", error);
+    }
+  };
