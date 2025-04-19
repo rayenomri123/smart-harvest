@@ -57,7 +57,7 @@ const Dashboard = () => {
   };
 
   fetchPlants();
-}, []);
+}, [plants]);
 
   useEffect(() => {
     // Modal handling
@@ -82,7 +82,10 @@ const Dashboard = () => {
   };
 
   // New click handler to navigate with plant data
-  const handlePlantClick = (plant) => {
+  const handlePlantClick = (plant) => (e) => {
+    if (e.target.closest('.card-buttons')) {
+      return;
+    }
     localStorage.setItem('selectedPlant', JSON.stringify(plant));
     navigate(`/${plant.id_plant}/plant-profile`, { state: { plant } });
   };
@@ -93,19 +96,16 @@ const Dashboard = () => {
       
       <div className="plants-grid-container">
         <div className="plants-container">
-          {plants.map(plant => (
-            <div key={plant.id} className="plant-card-wrapper">
-            {/* Clickable area covering 70% of the card */}
-            <div className="clickable-area" onClick={() => handlePlantClick(plant)}></div>
-            
-            <PlantCard 
-              plantName={plant.nom}
-              imageUrl={plant.url}
-              date={plant.date}
-              mode={plant.mode}
-              id={plant.id_plant}
-            />
-          </div>
+        {plants.map(plant => (
+  <div key={plant.id} onClick={handlePlantClick(plant)}>
+    <PlantCard 
+      plantName={plant.nom}
+      imageUrl={plant.url}
+      date={plant.date}
+      mode={plant.mode}
+      id={plant.id_plant}
+    />
+  </div>
           ))}
           
           <div className="plant-card add-button" onClick={handleAddPlantClick}>

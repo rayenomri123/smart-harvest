@@ -11,10 +11,20 @@
  
 }
 
-.delete-button-card {
+.card-buttons {
   position: absolute;
   top: 8px;
   right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3; /* Ensure buttons stay above clickable area */
+  background: rgba(255, 255, 255, 0.9); /* Optional: make buttons more distinct */
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.delete-button-card, .edit-button-card {
   background: rgba(255, 255, 255, 1);
   border: none;
   border-radius: 50%;
@@ -24,6 +34,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.edit-button-card:hover {
+  background-color: #3498db;
+}
+
+.edit-icon-card {
+  color: #666;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.edit-button-card:hover .edit-icon-card {
+  color: white;
 }
 
 .delete-button-card:hover{
